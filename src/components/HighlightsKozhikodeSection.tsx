@@ -197,7 +197,7 @@ export const HighlightsKozhikodeSection: React.FC = () => {
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 sm:mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 sm:mb-20 lg:mb-24">
           <div className="max-w-3xl">
             {/* Eyebrow with Terracotta Accent Bar */}
             <div className="flex items-center gap-3 text-xs sm:text-[13px] tracking-[0.24em] font-semibold text-[#666666] uppercase mb-4">

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { 
   Phone, 
   Mail, 
-  MapPin, 
   ArrowUp, 
   ChevronRight, 
   X
@@ -38,71 +37,61 @@ export const FooterSection: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 pb-14 border-b border-white/10">
           
           {/* Column 1: Get in Touch & Airport Branding */}
-          <div className="flex flex-col justify-between">
-            <div>
-              {/* Official Airport Logo */}
-              <div className="mb-6 flex items-center gap-3">
-                <img 
-                  src="/logo_15042021.png" 
-                  alt="Calicut International Airport Logo" 
-                  className="h-16 w-auto object-contain drop-shadow-md"
-                />
-              </div>
+          <div className="flex flex-col">
+            {/* Official Airport Logo */}
+            <div className="mb-6 flex items-center">
+              <img 
+                src="/logo_15042021.png" 
+                alt="Calicut International Airport Logo" 
+                className="h-16 sm:h-20 w-auto object-contain drop-shadow-md"
+              />
+            </div>
 
-              <h3 className="font-serif text-2xl font-normal text-white mb-3">
-                Get in Touch
-              </h3>
-              <p className="text-white/70 text-xs sm:text-[13px] leading-relaxed mb-6 font-normal">
-                Airports Authority of India<br />
-                Calicut International Airport (CCJ)<br />
-                Karipur, Malappuram District, Kerala - 673647
-              </p>
+            <h3 className="font-serif text-2xl font-normal text-white mb-3">
+              Get in Touch
+            </h3>
+            
+            <p className="text-white/80 text-xs sm:text-[13px] leading-relaxed mb-5 font-normal max-w-sm">
+              Airport Director, Airports Authority of India Calicut International Airport, Calicut Airport (PO), Malappuram District, Kerala State - Pin. 673 647
+            </p>
 
-              {/* Contact Quick Details */}
-              <div className="space-y-3 text-xs text-white/80">
-                <a 
-                  href="tel:+914832712630" 
-                  className="flex items-center gap-2.5 hover:text-[#E8A57A] transition-colors group"
-                >
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E8A57A] group-hover:bg-[#A2552B] group-hover:text-white transition-colors shrink-0">
-                    <Phone className="w-3.5 h-3.5" />
-                  </div>
-                  <span>+91 483 271 2630 / 9494</span>
-                </a>
-
-                <a 
-                  href="mailto:apd_calicut@aai.aero" 
-                  className="flex items-center gap-2.5 hover:text-[#E8A57A] transition-colors group"
-                >
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E8A57A] group-hover:bg-[#A2552B] group-hover:text-white transition-colors shrink-0">
-                    <Mail className="w-3.5 h-3.5" />
-                  </div>
-                  <span>apd_calicut@aai.aero</span>
-                </a>
-
-                <div className="flex items-start gap-2.5 text-white/70">
-                  <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E8A57A] shrink-0 mt-0.5">
-                    <MapPin className="w-3.5 h-3.5" />
-                  </div>
-                  <span>28 km from Kozhikode City</span>
+            {/* Contact Quick Details */}
+            <div className="space-y-3 text-xs sm:text-[13px] text-white/90">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E8A57A] shrink-0">
+                  <Phone className="w-3.5 h-3.5" />
+                </div>
+                <div className="flex flex-wrap gap-x-1.5">
+                  <a href="tel:04832719401" className="hover:text-[#E8A57A] transition-colors">0483-2719401</a>
+                  <span>,</span>
+                  <a href="tel:04832719491" className="hover:text-[#E8A57A] transition-colors">0483-2719491</a>
                 </div>
               </div>
+
+              <a 
+                href="mailto:apd_calicut@aai.aero" 
+                className="flex items-center gap-2.5 hover:text-[#E8A57A] transition-colors group"
+              >
+                <div className="w-7 h-7 rounded-full bg-white/10 flex items-center justify-center text-[#E8A57A] group-hover:bg-[#A2552B] group-hover:text-white transition-colors shrink-0">
+                  <Mail className="w-3.5 h-3.5" />
+                </div>
+                <span>apd_calicut@aai.aero</span>
+              </a>
             </div>
           </div>
 
-          {/* Column 2: Travellers */}
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5 pb-2 border-b border-white/10 flex items-center justify-between">
-              <span>Travellers</span>
-              <span className="w-6 h-[1.5px] bg-[#E8A57A]" />
+          {/* Column 2: Travellers (Slightly down, increased font size, no underline) */}
+          <div className="pt-2 sm:pt-4 md:pt-7">
+            <h4 className="text-sm sm:text-[15px] font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5">
+              Travellers
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-white/75 font-normal">
+            <ul className="space-y-3 text-[14px] sm:text-[15px] text-white/80 font-normal">
               <li>
                 <a 
                   href="#flightModal" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Airline Details</span>
                 </a>
               </li>
@@ -111,13 +100,13 @@ export const FooterSection: React.FC = () => {
                   href="#destination-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>How to Reach</span>
                 </a>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Immigration Service</span>
                 </span>
               </li>
@@ -126,7 +115,7 @@ export const FooterSection: React.FC = () => {
                   href="#essentials-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Lost and Found</span>
                 </a>
               </li>
@@ -135,7 +124,7 @@ export const FooterSection: React.FC = () => {
                   href="#essentials-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Medical Facilities</span>
                 </a>
               </li>
@@ -144,23 +133,22 @@ export const FooterSection: React.FC = () => {
                   href="#highlights-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Tourist Attractions</span>
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Column 3: Airport Information */}
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5 pb-2 border-b border-white/10 flex items-center justify-between">
-              <span>Airport Information</span>
-              <span className="w-6 h-[1.5px] bg-[#E8A57A]" />
+          {/* Column 3: Airport Information (Slightly down, increased font size, no underline) */}
+          <div className="pt-2 sm:pt-4 md:pt-7">
+            <h4 className="text-sm sm:text-[15px] font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5">
+              Airport Information
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-white/75 font-normal">
+            <ul className="space-y-3 text-[14px] sm:text-[15px] text-white/80 font-normal">
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Board of Directors</span>
                 </span>
               </li>
@@ -169,13 +157,13 @@ export const FooterSection: React.FC = () => {
                   href="#news-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Airport Infrastructure</span>
                 </a>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Traffic Information</span>
                 </span>
               </li>
@@ -184,44 +172,43 @@ export const FooterSection: React.FC = () => {
                   href="#essentials-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Passenger Terminals</span>
                 </a>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Technical Information</span>
                 </span>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Airport Charges</span>
                 </span>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>E-Magazine</span>
                 </span>
               </li>
             </ul>
           </div>
 
-          {/* Column 4: Quick Links */}
-          <div>
-            <h4 className="text-xs sm:text-sm font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5 pb-2 border-b border-white/10 flex items-center justify-between">
-              <span>Quick Links</span>
-              <span className="w-6 h-[1.5px] bg-[#E8A57A]" />
+          {/* Column 4: Quick Links (Slightly down, increased font size, no underline) */}
+          <div className="pt-2 sm:pt-4 md:pt-7">
+            <h4 className="text-sm sm:text-[15px] font-bold uppercase tracking-[0.16em] text-[#E8A57A] mb-5">
+              Quick Links
             </h4>
-            <ul className="space-y-2.5 text-xs sm:text-[13px] text-white/75 font-normal">
+            <ul className="space-y-3 text-[14px] sm:text-[15px] text-white/80 font-normal">
               <li>
                 <a 
                   href="#news-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Press Release</span>
                 </a>
               </li>
@@ -230,7 +217,7 @@ export const FooterSection: React.FC = () => {
                   href="#highlights-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Gallery</span>
                 </a>
               </li>
@@ -239,41 +226,37 @@ export const FooterSection: React.FC = () => {
                   href="#news-section" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>News & Events</span>
                 </a>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Careers</span>
                 </span>
               </li>
               <li>
                 <span className="inline-flex items-center gap-1.5 cursor-pointer hover:text-white hover:translate-x-1 transition-all duration-200">
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Tenders</span>
                 </span>
-              </li>
-              <li>
-                <a 
-                  href="#news-section" 
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setFeedbackOpen(true);
-                  }}
-                  className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer"
-                >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
-                  <span>Contact Us</span>
-                </a>
               </li>
               <li>
                 <button 
                   onClick={() => setFeedbackOpen(true)}
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer text-left"
                 >
-                  <ChevronRight className="w-3 h-3 text-[#E8A57A]/60" />
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
+                  <span>Contact Us</span>
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => setFeedbackOpen(true)}
+                  className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200 cursor-pointer text-left"
+                >
+                  <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
                   <span>Feedback</span>
                 </button>
               </li>
@@ -422,4 +405,3 @@ export const FooterSection: React.FC = () => {
     </footer>
   );
 };
-

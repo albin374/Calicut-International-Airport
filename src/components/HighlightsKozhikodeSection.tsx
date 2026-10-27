@@ -181,16 +181,17 @@ export const HighlightsKozhikodeSection: React.FC = () => {
     <section className="relative w-full overflow-hidden bg-[#FAF7F2] text-[#141414] py-16 sm:py-24 lg:py-28 select-none border-t border-stone-200/50">
       
       {/* Background Scenic Right Image for Heading: Misty Golden Hour Coastal Escape */}
-      <div className="absolute top-0 right-0 w-full sm:w-[580px] md:w-[720px] lg:w-[880px] xl:w-[1000px] h-[380px] sm:h-[420px] lg:h-[460px] pointer-events-none select-none z-0 overflow-hidden opacity-85">
+      <div className="absolute top-0 right-0 w-full sm:w-[580px] md:w-[720px] lg:w-[880px] xl:w-[1000px] h-[380px] sm:h-[420px] lg:h-[460px] pointer-events-none select-none z-0 overflow-hidden">
         <img 
           src="/Misty Golden Hour Coastal Escape.png" 
           alt="Misty Golden Hour Coastal Escape"
           className="w-full h-full object-cover object-center lg:object-right-top"
         />
-        {/* Soft edge gradients to seamlessly blend into #FAF7F2 background */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/60 via-35% to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/30 via-20% to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7F2]/40 via-transparent to-transparent" />
+        {/* Left side gradient to cleanly preserve heading text legibility while keeping the rest of the image rich & vibrant */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/60 via-30% to-transparent" />
+        
+        {/* Subtle bottom edge blend into the carousel */}
+        <div className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-[#FAF7F2] to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">

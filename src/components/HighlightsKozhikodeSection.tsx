@@ -180,46 +180,17 @@ export const HighlightsKozhikodeSection: React.FC = () => {
   return (
     <section className="relative w-full overflow-hidden bg-[#FAF7F2] text-[#141414] py-16 sm:py-24 lg:py-28 select-none border-t border-stone-200/50">
       
-      {/* Background Scenic Silhouette in Top-Right (Sun, Palm Trees & Dhow Boat) */}
-      <div className="absolute top-0 right-0 w-full sm:w-[680px] lg:w-[840px] h-[340px] pointer-events-none select-none z-0 overflow-hidden opacity-40">
-        <svg 
-          viewBox="0 0 800 320" 
-          fill="none" 
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full h-full object-cover object-right-top"
-        >
-          {/* Soft Sunset Glow */}
-          <circle cx="560" cy="140" r="85" fill="#E8C59A" fillOpacity="0.45" />
-          <circle cx="560" cy="140" r="140" fill="#F4DEC3" fillOpacity="0.25" />
-          
-          {/* Water Horizon Lines */}
-          <line x1="320" y1="230" x2="800" y2="230" stroke="#C4A88E" strokeWidth="1.5" strokeOpacity="0.35" />
-          <line x1="380" y1="245" x2="800" y2="245" stroke="#C4A88E" strokeWidth="1" strokeOpacity="0.25" />
-          <line x1="440" y1="260" x2="800" y2="260" stroke="#C4A88E" strokeWidth="0.8" strokeOpacity="0.2" />
-
-          {/* Traditional Dhow Boat */}
-          <g transform="translate(470, 160) scale(0.65)" opacity="0.6">
-            <path d="M10 70 Q 60 78 120 70 Q 140 68 150 55 L 135 55 Q 80 62 25 55 Z" fill="#8C6546" />
-            <line x1="75" y1="70" x2="80" y2="10" stroke="#7A5337" strokeWidth="2.5" />
-            <path d="M 80 15 L 140 60 L 80 65 Z" fill="#A2552B" fillOpacity="0.35" />
-            <path d="M 80 20 L 35 55 L 77 62 Z" fill="#8C6546" fillOpacity="0.25" />
-          </g>
-
-          {/* Tropical Palm Trees Silhouettes */}
-          <g transform="translate(620, 20) scale(0.9)" opacity="0.55">
-            <path d="M100 230 Q 95 140 75 80" stroke="#7A5337" strokeWidth="6" strokeLinecap="round" />
-            <path d="M75 80 Q 30 70 5 95" stroke="#684A33" strokeWidth="3" fill="none" />
-            <path d="M75 80 Q 40 45 20 50" stroke="#684A33" strokeWidth="3" fill="none" />
-            <path d="M75 80 Q 75 30 70 25" stroke="#684A33" strokeWidth="3" fill="none" />
-            <path d="M75 80 Q 115 45 130 55" stroke="#684A33" strokeWidth="3" fill="none" />
-            <path d="M75 80 Q 120 75 145 105" stroke="#684A33" strokeWidth="3" fill="none" />
-            <path d="M130 230 Q 135 150 155 100" stroke="#7A5337" strokeWidth="5" strokeLinecap="round" />
-            <path d="M155 100 Q 110 90 95 110" stroke="#684A33" strokeWidth="2.5" fill="none" />
-            <path d="M155 100 Q 130 70 120 60" stroke="#684A33" strokeWidth="2.5" fill="none" />
-            <path d="M155 100 Q 185 75 205 85" stroke="#684A33" strokeWidth="2.5" fill="none" />
-            <path d="M155 100 Q 190 105 210 130" stroke="#684A33" strokeWidth="2.5" fill="none" />
-          </g>
-        </svg>
+      {/* Background Scenic Right Image for Heading: Misty Golden Hour Coastal Escape */}
+      <div className="absolute top-0 right-0 w-full sm:w-[580px] md:w-[720px] lg:w-[880px] xl:w-[1000px] h-[380px] sm:h-[420px] lg:h-[460px] pointer-events-none select-none z-0 overflow-hidden opacity-85">
+        <img 
+          src="/Misty Golden Hour Coastal Escape.png" 
+          alt="Misty Golden Hour Coastal Escape"
+          className="w-full h-full object-cover object-center lg:object-right-top"
+        />
+        {/* Soft edge gradients to seamlessly blend into #FAF7F2 background */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/60 via-35% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-[#FAF7F2]/30 via-20% to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#FAF7F2]/40 via-transparent to-transparent" />
       </div>
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">

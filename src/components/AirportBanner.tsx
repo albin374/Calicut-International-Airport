@@ -221,14 +221,14 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
           );
         })}
 
-        {/* Soft atmospheric gradient on the left side to guarantee high contrast for white typography */}
-        <div className="absolute inset-0 z-20 bg-gradient-to-r from-black/85 via-black/45 to-transparent sm:from-black/80 sm:via-black/35 sm:to-transparent pointer-events-none" />
+        {/* Light atmospheric gradient on the left side to keep white typography clear without darkening the background image */}
+        <div className="absolute inset-0 z-20 bg-gradient-to-r from-black/50 via-black/25 to-transparent sm:from-black/45 sm:via-black/15 sm:to-transparent pointer-events-none" />
       </div>
 
       {/* ======================================================== */}
       {/* TOP NAVIGATION BAR WITH ENLARGED LOGO & CENTERED MENUS   */}
       {/* ======================================================== */}
-      <header className="absolute top-0 inset-x-0 z-50 w-full bg-gradient-to-b from-black/75 via-black/35 to-transparent pt-3 sm:pt-4 pb-8">
+      <header className="absolute top-0 inset-x-0 z-50 w-full bg-gradient-to-b from-black/45 via-black/15 to-transparent pt-3 sm:pt-4 pb-8">
         <div className="relative w-full px-4 sm:px-8 lg:px-12 xl:px-14 flex items-center justify-between">
           
           {/* Logo on Far Left Corner */}

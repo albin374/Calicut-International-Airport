@@ -43,7 +43,7 @@ export const FooterSection: React.FC = () => {
               <img 
                 src="/Airports Authority of India Logo.png" 
                 alt="Airports Authority of India Logo" 
-                className="h-16 sm:h-20 w-auto object-contain drop-shadow-md"
+                className="h-14 sm:h-16 md:h-20 max-h-20 w-auto max-w-[220px] sm:max-w-[260px] object-contain drop-shadow-md"
               />
             </div>
 

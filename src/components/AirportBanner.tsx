@@ -236,7 +236,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
             <img 
               src="/Airports Authority of India Logo.png" 
               alt="Airports Authority of India Logo" 
-              className="h-13 sm:h-15 lg:h-18 xl:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
+              className="h-11 sm:h-12 md:h-14 lg:h-16 xl:h-[72px] max-h-11 sm:max-h-12 md:max-h-14 lg:max-h-16 xl:max-h-[72px] w-auto max-w-[160px] sm:max-w-[220px] md:max-w-none object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
           </a>
 
@@ -286,7 +286,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                 <img 
                   src="/Airports Authority of India Logo.png" 
                   alt="Airports Authority of India" 
-                  className="h-12 w-auto object-contain"
+                  className="h-10 sm:h-12 max-h-12 w-auto object-contain"
                 />
                 <button
                   type="button"
@@ -525,7 +525,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                 <img 
                   src="/Airports Authority of India Logo.png" 
                   alt="Airports Authority of India Logo" 
-                  className="h-10 w-auto object-contain"
+                  className="h-9 sm:h-10 max-h-10 w-auto object-contain"
                 />
                 <div>
                   <h3 className="font-serif text-xl font-bold text-stone-900">Airport Contact</h3>

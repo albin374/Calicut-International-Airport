@@ -234,8 +234,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
           {/* Logo on Far Left Corner */}
           <a href="#" className="flex items-center group focus:outline-none shrink-0 z-20">
             <img 
-              src="/logo_15042021.png" 
-              alt="Calicut International Airport Logo" 
+              src="/Airports Authority of India Logo.png" 
+              alt="Airports Authority of India Logo" 
               className="h-13 sm:h-15 lg:h-18 xl:h-20 w-auto object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-md"
             />
           </a>
@@ -284,8 +284,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-stone-200">
                 <img 
-                  src="/logo_15042021.png" 
-                  alt="Calicut International Airport" 
+                  src="/Airports Authority of India Logo.png" 
+                  alt="Airports Authority of India" 
                   className="h-12 w-auto object-contain"
                 />
                 <button
@@ -523,8 +523,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
             <div className="flex items-center justify-between pb-4 border-b border-stone-200">
               <div className="flex items-center gap-3">
                 <img 
-                  src="/logo_15042021.png" 
-                  alt="Calicut International Airport Logo" 
+                  src="/Airports Authority of India Logo.png" 
+                  alt="Airports Authority of India Logo" 
                   className="h-10 w-auto object-contain"
                 />
                 <div>

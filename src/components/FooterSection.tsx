@@ -41,8 +41,8 @@ export const FooterSection: React.FC = () => {
             {/* Official Airport Logo */}
             <div className="mb-6 flex items-center">
               <img 
-                src="/logo_15042021.png" 
-                alt="Calicut International Airport Logo" 
+                src="/Airports Authority of India Logo.png" 
+                alt="Airports Authority of India Logo" 
                 className="h-16 sm:h-20 w-auto object-contain drop-shadow-md"
               />
             </div>

@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { BookOpen, ChevronRight, X } from 'lucide-react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { ArrowRight, X } from 'lucide-react';
 
 export interface StoryChapter {
   id: string;
+  number: string;
   tagline: string;
-  titleLine1: string;
-  titleLine2: string;
+  subtitle: string;
   description: string;
   image: string;
-  textSide: 'left' | 'right';
   era: string;
   deepDive: {
     overview: string;
@@ -20,12 +19,11 @@ export interface StoryChapter {
 export const STORY_CHAPTERS: StoryChapter[] = [
   {
     id: 'chapter-1',
-    tagline: 'THE BEGINNING',
-    titleLine1: 'How Calicut',
-    titleLine2: 'rose to power',
-    description: 'Calicut emerged as a major port city around the 13th century. After the decline of the Kulashekhara Empire, the Eradis of Nediyiruppu gained control of the region and established the Zamorins, who made Calicut a prominent trading centre.',
-    image: '/Golden Sunset Harbor Marketplace1.png',
-    textSide: 'left',
+    number: '01',
+    tagline: 'The Beginning',
+    subtitle: 'How Calicut rose to power',
+    description: 'Calicut emerged as a major port city around the 13th century, laying the foundation for a thriving maritime centre.',
+    image: '/Tropical Dhow Harbor Spice Market01.png',
     era: '13th Century',
     deepDive: {
       overview: 'Originally known as Nediyiruppu Swaroopam, the Eradi rulers shifted towards the coastal strip of Kozhikode seeking maritime access. By granting religious tolerance, equitable trade tariffs, and absolute security to foreign merchants, the Zamorins (Samoothiris) transformed a modest coastal clearing into the premier international entrepôt of the Arabian Sea.',
@@ -39,12 +37,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-2',
-    tagline: 'A WORLD OF TRADE',
-    titleLine1: 'A meeting place',
-    titleLine2: 'of nations',
-    description: 'Spice markets, merchant ships, and connections with Arabia and China.',
-    image: '/Golden Sunset Spice Harbor.png',
-    textSide: 'right',
+    number: '02',
+    tagline: 'A World of Trade',
+    subtitle: 'A meeting place of nations',
+    description: 'Spice markets, merchant ships, and connections with Arabia and China established Calicut as the world\'s spice capital.',
+    image: '/Golden Sunset Spice Harbor02.png',
     era: '14th Century',
     deepDive: {
       overview: 'Calicut’s shores evolved into a bustling cosmopolitan melting pot where traders from Venice, Cairo, Persia, and China converged. The waterfront spice bazaars were alive with multilingual bargaining, exchanging black pepper, ginger, cloves, and fine woven Calico textiles.',
@@ -58,12 +55,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-3',
-    tagline: 'THE PEOPLE BEHIND THE PORT',
-    titleLine1: 'Ships, sailors and',
-    titleLine2: 'skilled navigators',
-    description: 'The merchants, sailors, and Marikkar naval leaders who shaped Calicut’s maritime history.',
-    image: '/Golden Harbor at Sunset2.png',
-    textSide: 'left',
+    number: '03',
+    tagline: 'The People Behind the Port',
+    subtitle: 'Ships, sailors and skilled navigators',
+    description: 'The merchants, sailors, and Marikkar naval leaders who shaped Calicut’s maritime history and mastered oceanic winds.',
+    image: '/Golden Harbor at Sunse03.png',
     era: '14th – 15th Century',
     deepDive: {
       overview: 'Calicut’s maritime dominance was driven by fearless seamen, seasoned cartographers, and the legendary Kunjali Marakkars — hereditary naval admirals of the Zamorins. Harnessing the annual predictability of the Southwest and Northeast monsoon winds, native navigators steered massive wooden vessels (Urus) across boundless oceans.',
@@ -77,12 +73,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-4',
-    tagline: 'THE MARITIME TRADITION',
-    titleLine1: 'Trade winds and',
-    titleLine2: 'ocean charts',
-    description: 'Nautical charts and seasonal monsoons guided merchant dhows across the Indian Ocean to Calicut\'s welcoming shores, trading black pepper, cardamom, and precious silks.',
-    image: '/Golden Hour Dhow Harbor3.png',
-    textSide: 'right',
+    number: '04',
+    tagline: 'The Maritime Tradition',
+    subtitle: 'Trade winds and ocean charts',
+    description: 'Nautical charts and seasonal monsoons guided merchant dhows across the Indian Ocean to Calicut\'s welcoming shores.',
+    image: '/Dhow Fleet from the Navigator’s Deck04.png',
     era: '15th Century',
     deepDive: {
       overview: 'Nautical cartography flourished as navigators charted seasonal monsoon currents across the Arabian Sea. Detailed sea charts and navigational quadrants enabled year-round trade connections connecting Calicut with Malacca, Hormuz, and Aden.',
@@ -96,12 +91,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-5',
-    tagline: 'A TURNING POINT',
-    titleLine1: 'Vasco da Gama',
-    titleLine2: 'arrives, 1498',
-    description: 'The Portuguese arrival and the beginning of a new era of trade and conflict.',
-    image: '/Golden Fleet Arrives at Sunset4.png',
-    textSide: 'left',
+    number: '05',
+    tagline: 'A Turning Point',
+    subtitle: 'Vasco da Gama arrives, 1498',
+    description: 'The Portuguese arrival and the beginning of a new era of global trade, European rivalry, and naval conflict.',
+    image: '/Crusader Fleet at Sunset05.png',
     era: 'May 1498',
     deepDive: {
       overview: 'On May 20, 1498, Portuguese navigator Vasco da Gama dropped anchor off the shores of Kappad, near Calicut, having rounded the Cape of Good Hope. His arrival opened the direct ocean sea route from Europe to Asia, fundamentally altering world history and inaugurating an era of intense maritime diplomacy, rivalry, and armed conflicts.',
@@ -115,12 +109,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-6',
-    tagline: 'THE LONG DECLINE',
-    titleLine1: 'A kingdom',
-    titleLine2: 'reaches its end',
-    description: 'Maritime resistance, political change, and the end of the Zamorin’s rule.',
-    image: '/Golden Harbor Fortress at Sunset5.png',
-    textSide: 'right',
+    number: '06',
+    tagline: 'The Long Decline',
+    subtitle: 'A kingdom reaches its end',
+    description: 'Maritime resistance, political change, and the twilight of the Zamorin’s storied rule across the Malabar coast.',
+    image: '/Sunset Fortress Over a Bustling Harbor06.png',
     era: '16th – 18th Century',
     deepDive: {
       overview: 'Over subsequent centuries, the Zamorins and their naval leaders mounted fierce resistance against European fortresses and naval blockades. Despite heroic defenses led by successive Kunjali Marakkars, shifting regional coalitions, the rise of Travancore, and Mysore invasions eventually brought the sovereignty of the Zamorins to an end by the late 18th century.',
@@ -134,12 +127,11 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   },
   {
     id: 'chapter-7',
-    tagline: 'GUARDIAN OF THE COAST',
-    titleLine1: 'Kozhikode Lighthouse,',
-    titleLine2: 'guiding the shores',
-    description: 'First constructed in 1847 at a height of 33 meters, the historic Kozhikode Lighthouse has guided generations of mariners through Malabar\'s waters. The iconic white coastal tower stands as a timeless sentinel of Calicut\'s maritime legacy.',
-    image: '/Golden Lighthouse Over Tropical Sunset.png',
-    textSide: 'left',
+    number: '07',
+    tagline: 'Guardian of the Coast',
+    subtitle: 'Kozhikode Lighthouse, 1847',
+    description: 'First constructed in 1847 as a 33-meter coastal beacon, the historic lighthouse guided generations of mariners.',
+    image: '/Coastal Lighthouse Among Tropical Greenery07.png',
     era: '1847 – Present',
     deepDive: {
       overview: 'The Kozhikode Lighthouse stands as a revered beacon on the Malabar shoreline. First erected in 1847 to safeguard merchant dhows, steamships, and coastal fleets navigating into Calicut harbor, the station underwent continuous engineering evolutions—progressing from coconut oil wick lamps and British occulting optics to acetylene gas flashers and modern solar-powered LED automation.',
@@ -154,8 +146,130 @@ export const STORY_CHAPTERS: StoryChapter[] = [
   }
 ];
 
+const BASE_COUNT = STORY_CHAPTERS.length;
+const EXTENDED_CHAPTERS = [...STORY_CHAPTERS, ...STORY_CHAPTERS, ...STORY_CHAPTERS];
+const INITIAL_INDEX = BASE_COUNT; // Index 7 is the start of the middle set
+
 export const CalicutStorySection: React.FC = () => {
   const [selectedChapter, setSelectedChapter] = useState<StoryChapter | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(INITIAL_INDEX);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
+  const [dimensions, setDimensions] = useState({ cardWidth: 320, gap: 24 });
+
+  const containerRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const touchStartXRef = useRef<number | null>(null);
+
+  // Calculate dynamic card dimensions for row layout
+  const updateDimensions = useCallback(() => {
+    if (!containerRef.current) return;
+    const containerWidth = containerRef.current.clientWidth;
+    if (!containerWidth) return;
+
+    const w = window.innerWidth;
+    let visible = 4;
+    let gap = 24;
+
+    if (w < 640) {
+      gap = 16;
+      const cardWidth = Math.round(containerWidth * 0.82);
+      setDimensions({ cardWidth, gap });
+      return;
+    } else if (w < 1024) {
+      visible = 2;
+      gap = 20;
+    } else if (w < 1280) {
+      visible = 3;
+      gap = 24;
+    } else {
+      visible = 4;
+      gap = 24;
+    }
+
+    const cardWidth = Math.round((containerWidth - (visible - 1) * gap) / visible);
+    setDimensions({ cardWidth, gap });
+  }, []);
+
+  useEffect(() => {
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    const timer = setTimeout(updateDimensions, 100);
+    return () => {
+      window.removeEventListener('resize', updateDimensions);
+      clearTimeout(timer);
+    };
+  }, [updateDimensions]);
+
+  // Handle seamless teleport on transition end
+  const handleTransitionEnd = (e: React.TransitionEvent) => {
+    if (e.target !== trackRef.current || e.propertyName !== 'transform') return;
+
+    if (currentIndex >= BASE_COUNT * 2) {
+      // Reached third set -> teleport silently back to middle set
+      setIsTransitioning(false);
+      setCurrentIndex((prev) => prev - BASE_COUNT);
+    } else if (currentIndex < BASE_COUNT) {
+      // Reached first set -> teleport silently back to middle set
+      setIsTransitioning(false);
+      setCurrentIndex((prev) => prev + BASE_COUNT);
+    }
+  };
+
+  // Re-enable smooth transition after silent teleport
+  useEffect(() => {
+    if (!isTransitioning) {
+      const raf = requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsTransitioning(true);
+        });
+      });
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [isTransitioning]);
+
+  const handlePrev = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  };
+
+  const handleNext = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  };
+
+  // Autoplay carousel movement (continuous loop)
+  useEffect(() => {
+    if (isPaused || selectedChapter !== null) return;
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      setCurrentIndex((prev) => prev + 1);
+    }, 3800);
+    return () => clearInterval(interval);
+  }, [isPaused, selectedChapter]);
+
+  // Touch Swipe handlers
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
+    touchStartXRef.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartXRef.current === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartXRef.current - touchEndX;
+
+    if (diff > 50) {
+      handleNext();
+    } else if (diff < -50) {
+      handlePrev();
+    }
+    touchStartXRef.current = null;
+    setIsPaused(false);
+  };
+
+  // Active indicator dot index (0 to 6)
+  const activeDotIndex = ((currentIndex % BASE_COUNT) + BASE_COUNT) % BASE_COUNT;
 
   // Close modal on Escape key
   useEffect(() => {
@@ -197,130 +311,169 @@ export const CalicutStorySection: React.FC = () => {
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* ======================================================== */}
-        {/* SECTION HEADER */}
+        {/* SECTION HEADER ROW WITH NAVIGATION CONTROLS */}
         {/* ======================================================== */}
-        <div className="max-w-3xl mb-10 sm:mb-14">
-          {/* Eyebrow Accent Bar & Category Tag */}
-          <div className="flex items-center gap-3 mb-3.5">
-            <span className="w-8 h-[2px] bg-[#A2552B] rounded-full inline-block shrink-0" />
-            <span className="text-xs sm:text-[13px] font-semibold tracking-[0.25em] text-[#A2552B] uppercase">
-              CHRONICLES OF CALICUT
-            </span>
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 sm:mb-16">
+          <div className="max-w-3xl">
+            {/* Eyebrow Accent Bar & Category Tag */}
+            <div className="flex items-center gap-3 mb-3.5">
+              <span className="w-8 h-[2px] bg-[#A2552B] rounded-full inline-block shrink-0" />
+              <span className="text-xs sm:text-[13px] font-semibold tracking-[0.25em] text-[#A2552B] uppercase">
+                CHRONICLES OF CALICUT
+              </span>
+            </div>
+
+            {/* Display Modern Professional Headline */}
+            <h2 className="font-sans text-3xl sm:text-5xl lg:text-[54px] font-bold text-[#121212] tracking-tight leading-[1.08] mb-3.5">
+              The Story of Calicut
+            </h2>
+
+            {/* Professional Subtitle */}
+            <p className="text-sm sm:text-base lg:text-[17px] text-[#4A4A4A] font-sans leading-relaxed max-w-2xl">
+              From the rise of the Zamorins and bustling spice markets to fearless navigators and the historic arrival of Vasco da Gama — trace the legendary maritime heritage that shaped Kozhikode into the City of Spices.
+            </p>
           </div>
 
-          {/* Display Modern Professional Headline */}
-          <h2 className="font-sans text-3xl sm:text-5xl lg:text-[54px] font-bold text-[#121212] tracking-tight leading-[1.08] mb-3.5">
-            The Story of Calicut
-          </h2>
+          {/* Navigation Controls: Circular Arrows & Dot Indicators */}
+          <div className="flex flex-col items-start md:items-end gap-3 self-start md:self-end pt-2 md:pt-0">
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handlePrev}
+                aria-label="Previous story card"
+                className="w-12 h-12 rounded-full border border-stone-300/80 bg-white text-stone-800 shadow-sm flex items-center justify-center hover:bg-stone-50 hover:scale-105 active:scale-95 cursor-pointer transition-all duration-300"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+                </svg>
+              </button>
 
-          {/* Professional Subtitle */}
-          <p className="text-sm sm:text-base lg:text-[17px] text-[#4A4A4A] font-sans leading-relaxed max-w-2xl">
-            From the rise of the Zamorins and bustling spice markets to fearless navigators and the historic arrival of Vasco da Gama — trace the legendary maritime heritage that shaped Kozhikode into the City of Spices.
-          </p>
+              <button
+                onClick={handleNext}
+                aria-label="Next story card"
+                className="w-12 h-12 rounded-full bg-[#A2552B] text-white shadow-md flex items-center justify-center hover:bg-[#8B4420] hover:scale-105 active:scale-95 cursor-pointer transition-all duration-300"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Dot Indicators */}
+            <div className="flex items-center gap-1.5 mt-1">
+              {STORY_CHAPTERS.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setIsTransitioning(true);
+                    setCurrentIndex(BASE_COUNT + i);
+                  }}
+                  aria-label={`Go to chapter ${i + 1}`}
+                  className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                    activeDotIndex === i 
+                      ? 'w-6 bg-[#A2552B]' 
+                      : 'w-2 bg-stone-300 hover:bg-stone-400'
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* ======================================================== */}
-        {/* STORY CARDS (COMPACT SLEEK SIZE WITH EXPLORE BUTTON) */}
+        {/* CARDS IN A ROW CAROUSEL TRACK */}
+        {/* Styled exactly like the mockup image with infinite loop */}
         {/* ======================================================== */}
-        <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10">
-          {STORY_CHAPTERS.map((chapter) => {
-            const isTextLeft = chapter.textSide === 'left';
-
-            return (
+        <div 
+          ref={containerRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          className="relative w-full overflow-hidden pb-4"
+        >
+          <div
+            ref={trackRef}
+            onTransitionEnd={handleTransitionEnd}
+            style={{
+              transform: `translateX(-${currentIndex * (dimensions.cardWidth + dimensions.gap)}px)`,
+              transition: isTransitioning ? 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)' : 'none',
+              gap: `${dimensions.gap}px`
+            }}
+            className="flex will-change-transform"
+          >
+            {EXTENDED_CHAPTERS.map((chapter, index) => (
               <article
-                key={chapter.id}
-                id={chapter.id}
-                className="group relative w-full rounded-2xl sm:rounded-3xl overflow-hidden border border-amber-950/10 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-[0_12px_32px_rgba(0,0,0,0.07)] transition-all duration-300 bg-[#FAF7F2] min-h-[290px] sm:min-h-[340px] lg:min-h-[370px] flex items-center"
+                key={`${chapter.id}-${index}`}
+                id={`${chapter.id}-${index}`}
+                onClick={() => setSelectedChapter(chapter)}
+                style={{ width: `${dimensions.cardWidth}px` }}
+                className="group relative flex-none h-[500px] sm:h-[530px] lg:h-[555px] rounded-[28px] sm:rounded-[32px] overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 flex flex-col justify-end cursor-pointer border border-stone-800/15 bg-stone-900"
               >
-                {/* -------------------------------------------------- */}
-                {/* 1. Underlying Cinematic Background Artwork */}
-                {/* -------------------------------------------------- */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none select-none">
-                  <img
-                    src={chapter.image}
-                    alt={`${chapter.titleLine1} ${chapter.titleLine2} - Calicut History`}
-                    className={`w-full h-full object-cover ${
-                      isTextLeft ? 'object-right' : 'object-left'
-                    }`}
-                    loading="lazy"
-                  />
+                {/* 1. Underlying Cinematic Full-Bleed Artwork */}
+                <img
+                  src={chapter.image}
+                  alt={`${chapter.tagline} - ${chapter.subtitle}`}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
+                  loading="lazy"
+                />
 
-                  {/* Desktop Smooth Editorial Feather Gradient */}
-                  {isTextLeft ? (
-                    <div 
-                      className="hidden md:block absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to right, #FAF7F2 0%, #FAF7F2 36%, rgba(250, 247, 242, 0.94) 46%, rgba(250, 247, 242, 0.6) 56%, rgba(250, 247, 242, 0.15) 68%, transparent 78%)'
-                      }}
-                    />
-                  ) : (
-                    <div 
-                      className="hidden md:block absolute inset-0 pointer-events-none"
-                      style={{
-                        background: 'linear-gradient(to left, #FAF7F2 0%, #FAF7F2 36%, rgba(250, 247, 242, 0.94) 46%, rgba(250, 247, 242, 0.6) 56%, rgba(250, 247, 242, 0.15) 68%, transparent 78%)'
-                      }}
-                    />
-                  )}
+                {/* 2. Dark Vignette Gradient on Bottom Behind Text */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/60 via-48% to-transparent pointer-events-none transition-opacity duration-300 group-hover:opacity-95" />
 
-                  {/* Mobile View Gradient */}
-                  <div 
-                    className="md:hidden absolute inset-0 pointer-events-none"
-                    style={{
-                      background: 'linear-gradient(to bottom, #FAF7F2 0%, #FAF7F2 52%, rgba(250, 247, 242, 0.92) 68%, rgba(250, 247, 242, 0.4) 84%, transparent 100%)'
-                    }}
-                  />
-                </div>
+                {/* Subtle top edge vignette for contrast and depth */}
+                <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-black/25 to-transparent pointer-events-none" />
 
-                {/* -------------------------------------------------- */}
-                {/* 2. Editorial Typography & Content Container */}
-                {/* -------------------------------------------------- */}
-                <div className="relative z-10 w-full px-6 sm:px-8 lg:px-12 py-7 sm:py-9 lg:py-10 flex items-center">
-                  <div 
-                    className={`w-full md:w-[56%] lg:w-[50%] xl:w-[46%] ${
-                      !isTextLeft ? 'md:ml-auto' : ''
-                    }`}
-                  >
-                    
-                    {/* Eyebrow Accent Line & Category Tag */}
-                    <div className="flex items-center gap-3 mb-2.5 sm:mb-3.5">
-                      <span className="w-6 sm:w-7 h-[2px] bg-[#A2552B] rounded-full inline-block shrink-0" />
-                      <span className="text-[11px] sm:text-xs font-semibold tracking-[0.24em] text-[#A2552B] uppercase font-sans">
-                        {chapter.tagline}
-                      </span>
-                    </div>
-
-                    {/* Modern Professional Headline */}
-                    <h3 className="font-sans text-2xl sm:text-3xl lg:text-[34px] xl:text-[38px] font-bold text-[#121212] leading-[1.14] tracking-tight mb-3 sm:mb-4">
-                      {chapter.titleLine1} <br />
-                      <span className="text-[#A2552B] block mt-0.5 font-semibold">
-                        {chapter.titleLine2}
-                      </span>
-                    </h3>
-
-                    {/* Professional Description Text */}
-                    <p className="font-sans text-[#3E3E3E] text-sm sm:text-[15px] lg:text-[16px] leading-[1.68] font-normal mb-5 sm:mb-6 max-w-xl">
-                      {chapter.description}
-                    </p>
-
-                    {/* Explore Chronicle Button */}
-                    <div>
-                      <button
-                        type="button"
-                        onClick={() => setSelectedChapter(chapter)}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium tracking-wide text-[#A2552B] bg-[#A2552B]/10 hover:bg-[#A2552B] hover:text-white border border-[#A2552B]/25 transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs active:scale-95 group/btn"
-                      >
-                        <BookOpen className="w-3.5 h-3.5" />
-                        <span>Explore Chronicle</span>
-                        <ChevronRight className="w-3.5 h-3.5 transition-transform duration-200 group-hover/btn:translate-x-0.5" />
-                      </button>
-                    </div>
-
+                {/* 3. Text Content Overlay at Bottom (Matches Mockup) */}
+                <div className="relative z-10 p-5 sm:p-6 lg:p-7 flex flex-col justify-end">
+                  
+                  {/* Eyebrow: 01 — */}
+                  <div className="flex items-center gap-2.5 mb-2">
+                    <span className="font-bold text-sm sm:text-base text-[#D4824C] tracking-wider font-sans">
+                      {chapter.number}
+                    </span>
+                    <span className="w-8 h-[2px] bg-[#D4824C]/80 rounded-full inline-block" />
                   </div>
+
+                  {/* Main Title: The Beginning */}
+                  <h3 className="font-serif text-2xl sm:text-[27px] text-white font-normal leading-snug tracking-tight mb-1 drop-shadow-sm">
+                    {chapter.tagline}
+                  </h3>
+
+                  {/* Subtitle: How Calicut rose to power */}
+                  <h4 className="text-stone-300 font-sans text-sm sm:text-[15px] font-normal leading-normal mb-2.5 drop-shadow-xs">
+                    {chapter.subtitle}
+                  </h4>
+
+                  {/* Description Paragraph */}
+                  <p className="text-stone-300/85 text-xs sm:text-[13px] leading-relaxed font-sans line-clamp-3 mb-3.5 max-w-[280px]">
+                    {chapter.description}
+                  </p>
+
+                  {/* Bottom Row: Era & Circular Terracotta Arrow Button */}
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="text-[11px] font-medium text-stone-400 tracking-wider uppercase font-sans">
+                      {chapter.era}
+                    </span>
+
+                    {/* Terracotta Circular Arrow Button (Matches Mockup) */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedChapter(chapter);
+                      }}
+                      className="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-[#B86230] hover:bg-[#A05020] text-white flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(184,98,48,0.5)] cursor-pointer shrink-0"
+                      aria-label={`Explore ${chapter.tagline}`}
+                    >
+                      <ArrowRight className="w-5 h-5 stroke-[2.2]" />
+                    </button>
+                  </div>
+
                 </div>
 
               </article>
-            );
-          })}
+            ))}
+          </div>
         </div>
 
       </div>
@@ -341,7 +494,7 @@ export const CalicutStorySection: React.FC = () => {
             <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-stone-900">
               <img 
                 src={selectedChapter.image} 
-                alt={selectedChapter.titleLine1}
+                alt={selectedChapter.tagline}
                 className="w-full h-full object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#FAF7F2] via-black/40 to-black/20" />
@@ -358,10 +511,10 @@ export const CalicutStorySection: React.FC = () => {
               {/* Title Overlay in Banner */}
               <div className="absolute bottom-4 left-6 right-6">
                 <span className="text-[11px] font-semibold tracking-[0.2em] text-[#A2552B] uppercase bg-white/90 px-2.5 py-1 rounded-md">
-                  {selectedChapter.tagline} · {selectedChapter.era}
+                  {selectedChapter.number} · {selectedChapter.era}
                 </span>
-                <h3 className="font-sans text-2xl sm:text-3xl text-stone-900 mt-2 font-bold">
-                  {selectedChapter.titleLine1} <span className="text-[#A2552B] font-semibold">{selectedChapter.titleLine2}</span>
+                <h3 className="font-serif text-2xl sm:text-3xl text-stone-900 mt-2 font-medium">
+                  {selectedChapter.tagline} — <span className="text-[#A2552B] font-sans font-semibold text-xl sm:text-2xl">{selectedChapter.subtitle}</span>
                 </h3>
               </div>
             </div>

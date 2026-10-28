@@ -39,6 +39,7 @@ export function App() {
       <HeritageSection 
         onDiscoverClick={handleDiscover}
         imageUrl="/Golden Sunset Over Coastline from Airplane Wing.png"
+        headerBgImage="/Kerala Heritage Market at Sunset.png"
       />
 
       {/* 3. Destination Section ("02 / BEYOND YOUR JOURNEY: A Destination That Stays With You") */}

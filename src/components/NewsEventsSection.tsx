@@ -155,15 +155,15 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 sm:mb-16">
           
           <div className="max-w-4xl lg:max-w-5xl">
-            {/* Index / Category Eyebrow: 04 / NEWS & EVENTS */}
+            {/* Index / Category Eyebrow: 05 / NEWS & EVENTS */}
             <div className="flex items-center gap-2.5 text-xs sm:text-[13px] tracking-[0.25em] font-medium text-[#555555] uppercase mb-4 select-none">
-              <span className="font-bold text-[#A2552B]">04</span>
+              <span className="font-bold text-[#A2552B]">05</span>
               <span className="text-stone-400">/</span>
               <span>NEWS & EVENTS</span>
             </div>
 
             {/* Main Headline */}
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-normal text-[#121212] tracking-tight leading-[1.06] mb-4 select-none">
+            <h2 className="font-sans text-3xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-bold text-[#121212] tracking-tight leading-[1.06] mb-4 select-none">
               News & Events
             </h2>
 
@@ -232,7 +232,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
                   </span>
 
                   {/* Headline */}
-                  <h3 className="font-serif text-xl sm:text-[22px] lg:text-[23px] text-[#121212] font-normal leading-[1.28] tracking-tight mb-2.5 group-hover:text-[#A2552B] transition-colors">
+                  <h3 className="font-sans text-xl sm:text-[22px] lg:text-[23px] text-[#121212] font-semibold leading-[1.3] tracking-tight mb-2.5 group-hover:text-[#A2552B] transition-colors">
                     {item.title}
                   </h3>
 
@@ -315,7 +315,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
 
             {/* Modal Scrollable Body */}
             <div className="p-6 sm:p-8 overflow-y-auto space-y-4">
-              <h3 className="font-serif text-2xl sm:text-3xl text-stone-900 font-normal leading-tight">
+              <h3 className="font-sans text-2xl sm:text-3xl text-stone-900 font-bold leading-tight">
                 {selectedArticle.title}
               </h3>
 

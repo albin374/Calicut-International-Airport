@@ -28,12 +28,12 @@ export const HeritageSection: React.FC<HeritageSectionProps> = ({
               </span>
             </div>
 
-            {/* Editorial Serif Headline */}
-            <h2 className="font-serif text-5xl sm:text-7xl lg:text-[84px] font-normal text-[#121212] leading-[1.03] tracking-tight">
+            {/* Modern Professional Headline */}
+            <h2 className="font-sans text-5xl sm:text-7xl lg:text-[84px] font-bold text-[#121212] leading-[1.04] tracking-tight">
               Rooted in<br />
               heritage.<br />
               Connected to<br />
-              the <span className="italic text-[#A2552B] font-serif">world.</span>
+              the <span className="text-[#A2552B]">world.</span>
             </h2>
           </div>
 
@@ -47,8 +47,8 @@ export const HeritageSection: React.FC<HeritageSectionProps> = ({
               <span>THE SPIRIT OF KOZHIKODE</span>
             </div>
 
-            {/* Editorial Body Text */}
-            <p className="text-[#3A3A3A] font-serif text-base sm:text-lg lg:text-[19px] leading-[1.75] font-normal mb-8 sm:mb-10">
+            {/* Professional Body Text */}
+            <p className="text-[#3A3A3A] font-sans text-base sm:text-lg lg:text-[19px] leading-[1.75] font-normal mb-8 sm:mb-10">
               A gateway to the Malabar coast, where centuries of trade, rich traditions and warm hospitality welcome every traveller. From the vibrant streets of Mittayi Theruvu to the serene shores of Kozhikode, every arrival begins a story.
             </p>
 

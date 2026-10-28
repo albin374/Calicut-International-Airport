@@ -205,10 +205,10 @@ export const HighlightsKozhikodeSection: React.FC = () => {
               <span className="w-9 h-[2px] bg-[#A2552B]" />
             </div>
 
-            {/* Display Editorial Headline */}
-            <h2 className="font-serif text-4xl sm:text-5xl lg:text-[56px] font-normal tracking-tight text-[#141414] leading-[1.12]">
+            {/* Modern Professional Headline */}
+            <h2 className="font-sans text-4xl sm:text-5xl lg:text-[56px] font-bold tracking-tight text-[#141414] leading-[1.12]">
               Timeless places,<br />
-              <span className="italic font-normal">unforgettable experiences.</span>
+              <span className="text-[#A2552B]">unforgettable experiences.</span>
             </h2>
 
             {/* Subtitle Copy */}
@@ -304,7 +304,7 @@ export const HighlightsKozhikodeSection: React.FC = () => {
                 <div className="relative z-10 p-5 sm:p-6 flex flex-col justify-end">
                   {/* Title without arrow */}
                   <div>
-                    <h3 className="font-serif text-2xl sm:text-[25px] font-medium text-white leading-snug tracking-tight whitespace-pre-line group-hover:text-[#F3D7B7] transition-colors drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[25px] font-bold text-white leading-snug tracking-tight whitespace-pre-line group-hover:text-[#F3D7B7] transition-colors drop-shadow-sm">
                       {item.title}
                     </h3>
                   </div>
@@ -363,7 +363,7 @@ export const HighlightsKozhikodeSection: React.FC = () => {
                 <span className="text-[11px] font-bold tracking-[0.2em] text-[#E8C59A] uppercase mb-1 block">
                   HIGHLIGHTS OF KOZHIKODE
                 </span>
-                <h3 className="font-serif text-3xl sm:text-4xl font-normal leading-tight">
+                <h3 className="font-sans text-3xl sm:text-4xl font-bold leading-tight">
                   {selectedHighlight.title.replace('\n', ' ')}
                 </h3>
                 {selectedHighlight.subtitle && (

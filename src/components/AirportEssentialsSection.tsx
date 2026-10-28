@@ -185,9 +185,9 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
             </div>
 
             {/* Main Headline: Exactly 2 lines */}
-            <h2 className="font-serif text-3xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-normal text-[#121212] tracking-tight leading-[1.06] mb-4 select-none">
+            <h2 className="font-sans text-3xl sm:text-5xl lg:text-[58px] xl:text-[64px] font-bold text-[#121212] tracking-tight leading-[1.08] mb-4 select-none">
               <span className="block sm:whitespace-nowrap">The Little Things That Make</span>
-              <span className="block italic font-serif text-[#A2552B]">Travel Easier</span>
+              <span className="block text-[#A2552B]">Travel Easier</span>
             </h2>
 
             {/* Descriptive Subtitle */}
@@ -244,7 +244,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
                       {moneyCard.categoryTag}
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-[26px] text-white font-normal tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
                       {moneyCard.title}
                     </h3>
                     <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
@@ -290,7 +290,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
                       {baggageCard.categoryTag}
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-[26px] text-white font-normal tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
                       {baggageCard.title}
                     </h3>
                     <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
@@ -341,7 +341,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                     <span className="text-[11px] sm:text-xs font-bold tracking-[0.22em] text-[#E0A985] uppercase block mb-1.5">
                       {parkingCard.categoryTag}
                     </span>
-                    <h3 className="font-serif text-3xl sm:text-4xl lg:text-[44px] text-white font-normal tracking-tight leading-tight mb-2 drop-shadow-md">
+                    <h3 className="font-sans text-3xl sm:text-4xl lg:text-[44px] text-white font-bold tracking-tight leading-tight mb-2 drop-shadow-md">
                       {parkingCard.title}
                     </h3>
                     <p className="text-white/85 text-xs sm:text-sm lg:text-[15px] leading-relaxed max-w-md font-sans">
@@ -393,7 +393,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
                       {medicalCard.categoryTag}
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-[26px] text-white font-normal tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
                       {medicalCard.title}
                     </h3>
                     <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
@@ -439,7 +439,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                     <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
                       {wifiCard.categoryTag}
                     </span>
-                    <h3 className="font-serif text-2xl sm:text-[26px] text-white font-normal tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
                       {wifiCard.title}
                     </h3>
                     <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
@@ -499,7 +499,7 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                 <span className="text-[10px] uppercase font-semibold tracking-wider text-[#FAF7F2] bg-[#A2552B] px-2 py-0.5 rounded-full inline-block mb-1.5">
                   {selectedService.categoryTag}
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl font-medium leading-tight">
+                <h3 className="font-sans text-2xl sm:text-3xl font-bold leading-tight">
                   {selectedService.title}
                 </h3>
               </div>

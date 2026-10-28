@@ -64,9 +64,9 @@ export const DestinationSection: React.FC<DestinationSectionProps> = ({
           </div>
 
           {/* Main Headline: A Destination That Stays With You */}
-          <h2 className="font-serif text-4xl sm:text-6xl lg:text-[66px] font-normal text-[#121212] tracking-tight leading-[1.04] mb-4 select-none">
+          <h2 className="font-sans text-4xl sm:text-6xl lg:text-[66px] font-bold text-[#121212] tracking-tight leading-[1.05] mb-4 select-none">
             A Destination<br />
-            That <span className="italic font-serif text-[#A2552B]">Stays With You</span>
+            That <span className="text-[#A2552B]">Stays With You</span>
           </h2>
 
           {/* Descriptive Copy */}

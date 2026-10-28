@@ -28,7 +28,7 @@ export const DEFAULT_SLIDES: CarouselSlide[] = [
     headline: (
       <>
         Calicut<br />
-        <span className="italic font-serif text-[#E8A57A]">International</span> Airport
+        <span className="text-[#E8A57A] font-semibold">International</span> Airport
       </>
     ),
     description: (
@@ -44,7 +44,7 @@ export const DEFAULT_SLIDES: CarouselSlide[] = [
     headline: (
       <>
         Every Journey Begins<br />
-        <span className="italic font-serif text-[#E8A57A]">With a</span> Flight
+        <span className="text-[#E8A57A] font-semibold">With a</span> Flight
       </>
     ),
     description: "Connecting Calicut to the world, bringing people closer to the places and moments that matter."
@@ -55,7 +55,7 @@ export const DEFAULT_SLIDES: CarouselSlide[] = [
     headline: (
       <>
         From the Skies to the<br />
-        <span className="italic font-serif text-[#E8A57A]">Shores of</span> Calicut
+        <span className="text-[#E8A57A] font-semibold">Shores of</span> Calicut
       </>
     ),
     description: "Land in Kozhikode and discover breathtaking sunsets, beautiful coastlines, and the timeless charm of the Malabar coast."
@@ -66,7 +66,7 @@ export const DEFAULT_SLIDES: CarouselSlide[] = [
     headline: (
       <>
         From Runways to<br />
-        <span className="italic font-serif text-[#E8A57A]">Rich</span> Traditions
+        <span className="text-[#E8A57A] font-semibold">Rich</span> Traditions
       </>
     ),
     description: "Experience the culture, shopping, and legendary sweets of Mittayi Theruvu."
@@ -335,13 +335,13 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
 
         {/* Dynamic Hero Title & Subtitle based on active carousel slide */}
         <div key={currentSlide} className="transition-all duration-700 ease-out min-h-[190px] sm:min-h-[240px] flex flex-col justify-end">
-          {/* Editorial Serif Hero Headline in White */}
-          <h1 className="font-serif text-5xl sm:text-7xl lg:text-[76px] font-normal text-white tracking-tight leading-[1.03] mb-3 sm:mb-4 select-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
+          {/* Professional Modern Hero Headline in White */}
+          <h1 className="font-sans text-5xl sm:text-7xl lg:text-[76px] font-bold text-white tracking-tight leading-[1.05] mb-3 sm:mb-4 select-none drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
             {currentSlideData.headline}
           </h1>
 
-          {/* Editorial Serif Subtitle in White */}
-          <p className="text-white/90 font-serif text-base sm:text-lg lg:text-[19px] leading-[1.75] font-normal max-w-xl mb-7 sm:mb-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
+          {/* Professional Modern Subtitle in White */}
+          <p className="text-white/90 font-sans text-base sm:text-lg lg:text-[18px] leading-[1.65] font-normal max-w-xl mb-7 sm:mb-8 drop-shadow-[0_1px_6px_rgba(0,0,0,0.7)]">
             {currentSlideData.description}
           </p>
         </div>
@@ -528,7 +528,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                   className="h-9 sm:h-10 max-h-10 w-auto object-contain"
                 />
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-stone-900">Airport Contact</h3>
+                  <h3 className="font-sans text-xl font-bold text-stone-900">Airport Contact</h3>
                   <span className="text-xs text-stone-500">Calicut International Airport (CCJ)</span>
                 </div>
               </div>

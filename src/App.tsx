@@ -3,6 +3,7 @@ import { AirportBanner } from './components/AirportBanner';
 import { HeritageSection } from './components/HeritageSection';
 import { DestinationSection } from './components/DestinationSection';
 import { AirportEssentialsSection } from './components/AirportEssentialsSection';
+import { CalicutStorySection } from './components/CalicutStorySection';
 import { NewsEventsSection } from './components/NewsEventsSection';
 import { HighlightsKozhikodeSection } from './components/HighlightsKozhikodeSection';
 import { FooterSection } from './components/FooterSection';
@@ -52,7 +53,12 @@ export function App() {
         <AirportEssentialsSection />
       </div>
 
-      {/* 5. News & Events Section ("News & Events: Stay updated with the latest happenings at Calicut International Airport.") */}
+      {/* 5. Chronicles of Calicut Section ("04 / CHRONICLES OF CALICUT: The Story of Calicut") */}
+      <div id="story-section">
+        <CalicutStorySection />
+      </div>
+
+      {/* 6. News & Events Section ("05 / NEWS & EVENTS: Stay updated with the latest happenings at Calicut International Airport.") */}
       <div id="news-section">
         <NewsEventsSection />
       </div>

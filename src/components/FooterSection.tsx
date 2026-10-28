@@ -47,7 +47,7 @@ export const FooterSection: React.FC = () => {
               />
             </div>
 
-            <h3 className="font-serif text-2xl font-normal text-white mb-3">
+            <h3 className="font-sans text-2xl font-bold text-white mb-3">
               Get in Touch
             </h3>
             
@@ -304,7 +304,7 @@ export const FooterSection: React.FC = () => {
           >
             <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
               <div>
-                <h3 className="font-serif text-2xl font-normal text-white">Passenger Feedback & Inquiry</h3>
+                <h3 className="font-sans text-2xl font-bold text-white">Passenger Feedback & Inquiry</h3>
                 <p className="text-xs text-white/60 mt-0.5">Calicut International Airport (Karipur - CCJ)</p>
               </div>
               <button

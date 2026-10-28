@@ -147,6 +147,21 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
   return (
     <section className="relative w-full overflow-hidden bg-[#FAF7F2] text-[#141414] py-16 sm:py-24 lg:py-28 select-none border-t border-stone-200/50">
       
+      {/* Background Scenic Image for Heading: Golden Hour Airport Runway Panorama */}
+      <div className="absolute top-0 right-0 w-full sm:w-[620px] md:w-[780px] lg:w-[960px] xl:w-[1120px] h-[320px] sm:h-[360px] lg:h-[390px] pointer-events-none select-none z-0 overflow-hidden">
+        <img 
+          src="/Golden Hour Airport Runway Panorama.png" 
+          alt="Golden Hour Airport Runway Panorama"
+          className="w-full h-full object-cover object-center lg:object-right-top opacity-95"
+          loading="lazy"
+        />
+        {/* Smooth feathered gradient from left so heading text is 100% crisp and readable */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/60 via-25% sm:via-32% to-transparent" />
+        
+        {/* Subtle bottom edge blend into news cards */}
+        <div className="absolute bottom-0 inset-x-0 h-14 bg-gradient-to-t from-[#FAF7F2]/80 to-transparent" />
+      </div>
+
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* ======================================================== */}
@@ -155,9 +170,12 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 sm:mb-16">
           
           <div className="max-w-4xl lg:max-w-5xl">
-            {/* Index / Category Eyebrow: 05 / NEWS & EVENTS */}
-            <div className="flex items-center gap-2.5 text-xs sm:text-[13px] tracking-[0.25em] font-medium text-[#555555] uppercase mb-4 select-none">
-              
+            {/* Category Eyebrow */}
+            <div className="flex items-center gap-3 mb-3.5 select-none">
+              <span className="w-8 h-[2px] bg-[#A2552B] rounded-full inline-block shrink-0" />
+              <span className="text-xs sm:text-[13px] font-semibold tracking-[0.25em] text-[#A2552B] uppercase">
+                CALICUT AIRPORT UPDATES
+              </span>
             </div>
 
             {/* Main Headline */}

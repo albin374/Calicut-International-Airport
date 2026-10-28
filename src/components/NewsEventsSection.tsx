@@ -157,9 +157,7 @@ export const NewsEventsSection: React.FC<NewsEventsSectionProps> = ({
           <div className="max-w-4xl lg:max-w-5xl">
             {/* Index / Category Eyebrow: 05 / NEWS & EVENTS */}
             <div className="flex items-center gap-2.5 text-xs sm:text-[13px] tracking-[0.25em] font-medium text-[#555555] uppercase mb-4 select-none">
-              <span className="font-bold text-[#A2552B]">05</span>
-              <span className="text-stone-400">/</span>
-              <span>NEWS & EVENTS</span>
+              
             </div>
 
             {/* Main Headline */}

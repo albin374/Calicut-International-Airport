@@ -179,6 +179,21 @@ export const CalicutStorySection: React.FC = () => {
       id="calicut-story-section"
       className="relative w-full bg-[#FAF7F2] text-[#141414] py-14 sm:py-20 lg:py-24 overflow-hidden select-none border-t border-stone-200/50"
     >
+      {/* Background Scenic Image for Heading: Kerala Festival Arts Panorama */}
+      <div className="absolute top-0 right-0 w-full sm:w-[600px] md:w-[760px] lg:w-[940px] xl:w-[1100px] h-[340px] sm:h-[380px] lg:h-[420px] pointer-events-none select-none z-0 overflow-hidden">
+        <img 
+          src="/Kerala Festival Arts Panorama.png" 
+          alt="Kerala Festival Arts Panorama"
+          className="w-full h-full object-cover object-center lg:object-right-top opacity-100"
+          loading="lazy"
+        />
+        {/* Slightly reduced left side gradient shade to let more of the artwork shine through */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#FAF7F2] via-[#FAF7F2]/50 via-20% sm:via-28% to-transparent" />
+        
+        {/* Subtle bottom edge blend */}
+        <div className="absolute bottom-0 inset-x-0 h-12 bg-gradient-to-t from-[#FAF7F2]/70 to-transparent" />
+      </div>
+
       <div className="relative z-10 max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
         
         {/* ======================================================== */}

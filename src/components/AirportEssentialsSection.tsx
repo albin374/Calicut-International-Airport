@@ -231,8 +231,9 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
               />
-              {/* Dark Vignette Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 via-[48%] to-black/25 pointer-events-none" />
+              {/* Subtle shade overlays for clear text legibility without over-darkening */}
+              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 via-[55%] to-transparent pointer-events-none" />
               
               {/* Diagonal Light Sheen Sweep on Hover */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/12 to-transparent transition-transform ease-out pointer-events-none z-20" />
@@ -241,13 +242,13 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
               <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 z-10">
                 <div className="flex items-end justify-between gap-3">
                   <div className="flex-1 pr-1">
-                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#F3BA96] uppercase block mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                       {moneyCard.categoryTag}
                     </span>
-                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                       {moneyCard.title}
                     </h3>
-                    <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
+                    <p className="text-white/95 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                       {moneyCard.description}
                     </p>
                   </div>
@@ -278,7 +279,9 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                 className="w-full h-full object-cover object-[center_35%] transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 via-[48%] to-black/25 pointer-events-none" />
+              {/* Subtle shade overlays for clear text legibility without over-darkening */}
+              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 via-[55%] to-transparent pointer-events-none" />
               
               {/* Diagonal Light Sheen Sweep on Hover */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/12 to-transparent transition-transform ease-out pointer-events-none z-20" />
@@ -287,13 +290,13 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
               <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 z-10">
                 <div className="flex items-end justify-between gap-3">
                   <div className="flex-1 pr-1">
-                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#F3BA96] uppercase block mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                       {baggageCard.categoryTag}
                     </span>
-                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                       {baggageCard.title}
                     </h3>
-                    <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
+                    <p className="text-white/95 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                       {baggageCard.description}
                     </p>
                   </div>
@@ -381,7 +384,9 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 via-[48%] to-black/25 pointer-events-none" />
+              {/* Subtle shade overlays for clear text legibility without over-darkening */}
+              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 via-[55%] to-transparent pointer-events-none" />
               
               {/* Diagonal Light Sheen Sweep on Hover */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/12 to-transparent transition-transform ease-out pointer-events-none z-20" />
@@ -390,13 +395,13 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
               <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 z-10">
                 <div className="flex items-end justify-between gap-3">
                   <div className="flex-1 pr-1">
-                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#F3BA96] uppercase block mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                       {medicalCard.categoryTag}
                     </span>
-                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                       {medicalCard.title}
                     </h3>
-                    <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
+                    <p className="text-white/95 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                       {medicalCard.description}
                     </p>
                   </div>
@@ -427,7 +432,9 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
                 className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-110"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/92 via-black/45 via-[48%] to-black/25 pointer-events-none" />
+              {/* Subtle shade overlays for clear text legibility without over-darkening */}
+              <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/45 via-[55%] to-transparent pointer-events-none" />
               
               {/* Diagonal Light Sheen Sweep on Hover */}
               <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full duration-1000 bg-gradient-to-r from-transparent via-white/12 to-transparent transition-transform ease-out pointer-events-none z-20" />
@@ -436,13 +443,13 @@ export const AirportEssentialsSection: React.FC<AirportEssentialsSectionProps> =
               <div className="absolute inset-0 flex flex-col justify-end p-5 sm:p-6 z-10">
                 <div className="flex items-end justify-between gap-3">
                   <div className="flex-1 pr-1">
-                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#E0A985] uppercase block mb-1">
+                    <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-[#F3BA96] uppercase block mb-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)]">
                       {wifiCard.categoryTag}
                     </span>
-                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-sm">
+                    <h3 className="font-sans text-2xl sm:text-[26px] text-white font-semibold tracking-tight leading-snug mb-1.5 drop-shadow-[0_2px_6px_rgba(0,0,0,0.8)]">
                       {wifiCard.title}
                     </h3>
-                    <p className="text-white/85 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px]">
+                    <p className="text-white/95 text-xs sm:text-[13px] leading-relaxed font-sans max-w-[260px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.8)]">
                       {wifiCard.description}
                     </p>
                   </div>

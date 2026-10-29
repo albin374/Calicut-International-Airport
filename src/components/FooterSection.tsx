@@ -97,7 +97,7 @@ export const FooterSection: React.FC = () => {
               </li>
               <li>
                 <a 
-                  href="#destination-section" 
+                  href="#how-to-reach" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
@@ -169,11 +169,11 @@ export const FooterSection: React.FC = () => {
               </li>
               <li>
                 <a 
-                  href="#essentials-section" 
+                  href="#airport-map" 
                   className="hover:text-white hover:translate-x-1 inline-flex items-center gap-1.5 transition-all duration-200"
                 >
                   <ChevronRight className="w-3.5 h-3.5 text-[#E8A57A]/60" />
-                  <span>Passenger Terminals</span>
+                  <span>Passenger Terminals & Map</span>
                 </a>
               </li>
               <li>

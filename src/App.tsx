@@ -31,98 +31,70 @@ export type AppPage =
   | 'corporate'
   | 'contact';
 
+function parseCurrentRoute(): {
+  page: AppPage;
+  flightTab: FlightPageTab;
+  cleanPath: string;
+} {
+  // Support pathname first (clean URLs like /procedures), then fallback to hash if present
+  let path = window.location.pathname.replace(/^\/+/, '').toLowerCase();
+  const hash = window.location.hash.replace(/^#\/?/, '').toLowerCase();
+  
+  if (!path && hash) {
+    path = hash;
+  }
+
+  if (path === 'procedures') return { page: 'procedures', flightTab: 'arrival', cleanPath: '/procedures' };
+  if (path === 'how-to-reach') return { page: 'how-to-reach', flightTab: 'arrival', cleanPath: '/how-to-reach' };
+  if (path === 'airport-map') return { page: 'airport-map', flightTab: 'arrival', cleanPath: '/airport-map' };
+  if (path === 'airline-details' || path === 'airlines') return { page: 'airline-details', flightTab: 'arrival', cleanPath: '/airline-details' };
+  if (path === 'facilities-services' || path === 'facilities' || path === 'services') return { page: 'facilities-services', flightTab: 'arrival', cleanPath: '/facilities-services' };
+  if (path === 'shop-dine-relax' || path === 'shop-dine' || path === 'dining') return { page: 'shop-dine-relax', flightTab: 'arrival', cleanPath: '/shop-dine-relax' };
+  if (path === 'tourist-attractions' || path === 'attractions') return { page: 'tourist-attractions', flightTab: 'arrival', cleanPath: '/tourist-attractions' };
+  if (path === 'corporate') return { page: 'corporate', flightTab: 'arrival', cleanPath: '/corporate' };
+  if (path === 'contact') return { page: 'contact', flightTab: 'arrival', cleanPath: '/contact' };
+
+  if (path === 'flights-departure' || path === 'departure') return { page: 'flights', flightTab: 'departure', cleanPath: '/flights-departure' };
+  if (path === 'flights-schedules' || path === 'schedules') return { page: 'flights', flightTab: 'schedules', cleanPath: '/flights-schedules' };
+  if (path === 'flights-upcoming' || path === 'upcoming') return { page: 'flights', flightTab: 'upcoming', cleanPath: '/flights-upcoming' };
+  if (path === 'flights-arrival' || path === 'arrival' || path === 'flights') return { page: 'flights', flightTab: 'arrival', cleanPath: '/flights-arrival' };
+
+  return { page: 'home', flightTab: 'arrival', cleanPath: '/' };
+}
+
 export function App() {
-  const [currentPage, setCurrentPage] = useState<AppPage>(() => {
-    const hash = window.location.hash;
-    if (hash === '#procedures') return 'procedures';
-    if (hash === '#how-to-reach') return 'how-to-reach';
-    if (hash === '#airport-map') return 'airport-map';
-    if (hash === '#airline-details' || hash === '#airlines') return 'airline-details';
-    if (hash === '#facilities-services' || hash === '#facilities' || hash === '#services') return 'facilities-services';
-    if (hash === '#shop-dine-relax' || hash === '#shop-dine' || hash === '#dining') return 'shop-dine-relax';
-    if (hash === '#tourist-attractions' || hash === '#attractions') return 'tourist-attractions';
-    if (hash === '#corporate') return 'corporate';
-    if (hash === '#contact') return 'contact';
-    if (
-      hash.startsWith('#flights') ||
-      hash === '#arrival' ||
-      hash === '#departure' ||
-      hash === '#schedules' ||
-      hash === '#upcoming'
-    ) {
-      return 'flights';
-    }
-    return 'home';
-  });
-
-  const [flightTab, setFlightTab] = useState<FlightPageTab>(() => {
-    const hash = window.location.hash;
-    if (hash === '#flights-departure' || hash === '#departure') return 'departure';
-    if (hash === '#flights-schedules' || hash === '#schedules') return 'schedules';
-    if (hash === '#flights-upcoming' || hash === '#upcoming') return 'upcoming';
-    return 'arrival';
-  });
-
+  const initialRoute = parseCurrentRoute();
+  const [currentPage, setCurrentPage] = useState<AppPage>(initialRoute.page);
+  const [flightTab, setFlightTab] = useState<FlightPageTab>(initialRoute.flightTab);
   const [mapTab, setMapTab] = useState<'overview' | 'T1' | 'T2' | 'parking'>('overview');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAirlineModalOpen, setIsAirlineModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'arrival' | 'departure'>('arrival');
   const [modalSearch, setModalSearch] = useState('');
 
-  // Sync hash routing so back/forward browser buttons and direct links work seamlessly
+  // Sync routing so back/forward browser buttons and direct links work seamlessly with clean paths
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash;
-      if (hash === '#procedures') {
-        setCurrentPage('procedures');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#how-to-reach') {
-        setCurrentPage('how-to-reach');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#airport-map') {
-        setCurrentPage('airport-map');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#airline-details' || hash === '#airlines') {
-        setCurrentPage('airline-details');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#facilities-services' || hash === '#facilities' || hash === '#services') {
-        setCurrentPage('facilities-services');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#shop-dine-relax' || hash === '#shop-dine' || hash === '#dining') {
-        setCurrentPage('shop-dine-relax');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#tourist-attractions' || hash === '#attractions') {
-        setCurrentPage('tourist-attractions');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#corporate') {
-        setCurrentPage('corporate');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#contact') {
-        setCurrentPage('contact');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#flights-departure' || hash === '#departure') {
-        setFlightTab('departure');
-        setCurrentPage('flights');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#flights-schedules' || hash === '#schedules') {
-        setFlightTab('schedules');
-        setCurrentPage('flights');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#flights-upcoming' || hash === '#upcoming') {
-        setFlightTab('upcoming');
-        setCurrentPage('flights');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '#flights-arrival' || hash === '#arrival' || hash === '#flights') {
-        setFlightTab('arrival');
-        setCurrentPage('flights');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      } else if (hash === '' || hash === '#') {
-        setCurrentPage('home');
+    // If opened with a hash or trailing #, clean it up immediately with replaceState
+    if (window.location.hash || (window.location.pathname !== initialRoute.cleanPath && initialRoute.cleanPath !== '/')) {
+      window.history.replaceState(null, '', initialRoute.cleanPath);
+    }
+
+    const handleLocationChange = () => {
+      const route = parseCurrentRoute();
+      setCurrentPage(route.page);
+      setFlightTab(route.flightTab);
+      if (window.location.hash) {
+        window.history.replaceState(null, '', route.cleanPath);
       }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener('popstate', handleLocationChange);
+    window.addEventListener('hashchange', handleLocationChange);
+    return () => {
+      window.removeEventListener('popstate', handleLocationChange);
+      window.removeEventListener('hashchange', handleLocationChange);
+    };
   }, []);
 
   const navigateTo = (
@@ -138,28 +110,33 @@ export function App() {
     }
     setCurrentPage(page);
 
+    let targetPath = '/';
     if (page === 'procedures') {
-      window.location.hash = '#procedures';
+      targetPath = '/procedures';
     } else if (page === 'how-to-reach') {
-      window.location.hash = '#how-to-reach';
+      targetPath = '/how-to-reach';
     } else if (page === 'airport-map') {
-      window.location.hash = '#airport-map';
+      targetPath = '/airport-map';
     } else if (page === 'flights') {
-      window.location.hash = `#flights-${fTab || flightTab}`;
+      targetPath = `/flights-${fTab || flightTab}`;
     } else if (page === 'airline-details') {
-      window.location.hash = '#airline-details';
+      targetPath = '/airline-details';
     } else if (page === 'facilities-services') {
-      window.location.hash = '#facilities-services';
+      targetPath = '/facilities-services';
     } else if (page === 'shop-dine-relax') {
-      window.location.hash = '#shop-dine-relax';
+      targetPath = '/shop-dine-relax';
     } else if (page === 'tourist-attractions') {
-      window.location.hash = '#tourist-attractions';
+      targetPath = '/tourist-attractions';
     } else if (page === 'corporate') {
-      window.location.hash = '#corporate';
+      targetPath = '/corporate';
     } else if (page === 'contact') {
-      window.location.hash = '#contact';
+      targetPath = '/contact';
     } else {
-      window.location.hash = '';
+      targetPath = '/';
+    }
+
+    if (window.location.pathname !== targetPath || window.location.hash) {
+      window.history.pushState(null, '', targetPath);
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -167,7 +144,10 @@ export function App() {
   const navigateToFlights = (tab: FlightPageTab = 'arrival') => {
     setFlightTab(tab);
     setCurrentPage('flights');
-    window.location.hash = `#flights-${tab}`;
+    const targetPath = `/flights-${tab}`;
+    if (window.location.pathname !== targetPath || window.location.hash) {
+      window.history.pushState(null, '', targetPath);
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

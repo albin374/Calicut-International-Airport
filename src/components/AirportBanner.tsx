@@ -290,7 +290,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToFlights) {
       onNavigateToFlights(tab);
     } else {
-      window.location.hash = `#flights-${tab}`;
+      window.history.pushState(null, '', `/flights-${tab}`);
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -301,7 +301,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToProcedures) {
       onNavigateToProcedures();
     } else {
-      window.location.hash = '#procedures';
+      window.history.pushState(null, '', '/procedures');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -311,7 +312,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToHowToReach) {
       onNavigateToHowToReach();
     } else {
-      window.location.hash = '#how-to-reach';
+      window.history.pushState(null, '', '/how-to-reach');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -321,7 +323,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToAirportMap) {
       onNavigateToAirportMap(tab);
     } else {
-      window.location.hash = '#airport-map';
+      window.history.pushState(null, '', '/airport-map');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -331,7 +334,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToFacilities) {
       onNavigateToFacilities();
     } else {
-      window.location.hash = '#facilities-services';
+      window.history.pushState(null, '', '/facilities-services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -341,7 +345,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToShopDine) {
       onNavigateToShopDine();
     } else {
-      window.location.hash = '#shop-dine-relax';
+      window.history.pushState(null, '', '/shop-dine-relax');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -351,7 +356,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     if (onNavigateToTouristAttractions) {
       onNavigateToTouristAttractions();
     } else {
-      window.location.hash = '#tourist-attractions';
+      window.history.pushState(null, '', '/tourist-attractions');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -362,13 +368,15 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
       if (onNavigateToFlights) {
         onNavigateToFlights(item);
       } else {
-        window.location.hash = `#flights-${item}`;
+        window.history.pushState(null, '', `/flights-${item}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else if (item === 'airline-details') {
       if (onOpenAirlineDetails) {
         onOpenAirlineDetails();
       } else {
-        window.location.hash = '#airline-details';
+        window.history.pushState(null, '', '/airline-details');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   };
@@ -379,7 +387,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
       if (onNavigateToContact) {
         onNavigateToContact();
       } else {
-        window.location.hash = '#contact';
+        window.history.pushState(null, '', '/contact');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       return;
@@ -400,7 +408,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
       if (onNavigateToCorporate) {
         onNavigateToCorporate();
       } else {
-        window.location.hash = '#corporate';
+        window.history.pushState(null, '', '/corporate');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       return;
     }
@@ -451,7 +460,15 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
         <div className="relative w-full px-4 sm:px-8 lg:px-12 xl:px-14 flex items-center justify-between">
           
           {/* Logo on Far Left Corner */}
-          <a href="#" className="flex items-center group focus:outline-none shrink-0 z-20">
+          <a 
+            href="/" 
+            onClick={(e) => {
+              e.preventDefault();
+              window.history.pushState(null, '', '/');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="flex items-center group focus:outline-none shrink-0 z-20 cursor-pointer"
+          >
             <img 
               src="/Airports Authority of India Logo.png" 
               alt="Airports Authority of India Logo" 
@@ -1021,7 +1038,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                   className="h-11 sm:h-12 max-h-12 w-auto object-contain cursor-pointer"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    window.location.hash = '';
+                    window.history.pushState(null, '', '/');
                     window.scrollTo({ top: 0, behavior: 'smooth' });
                   }}
                 />

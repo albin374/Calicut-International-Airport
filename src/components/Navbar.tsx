@@ -177,13 +177,15 @@ export const Navbar: React.FC<NavbarProps> = ({
       } else if (onOpenFlightStatus) {
         onOpenFlightStatus(item === 'arrival' ? 'arrival' : 'departure');
       } else {
-        window.location.hash = `#flights-${item}`;
+        window.history.pushState(null, '', `/flights-${item}`);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else if (item === 'airline-details') {
       if (onOpenAirlineDetails) {
         onOpenAirlineDetails();
       } else {
-        window.location.hash = '#airline-details';
+        window.history.pushState(null, '', '/airline-details');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
   };
@@ -196,7 +198,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     } else if (onNavigateToProcedures) {
       onNavigateToProcedures();
     } else {
-      window.location.hash = '#procedures';
+      window.history.pushState(null, '', '/procedures');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -208,7 +211,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     } else if (onNavigateToHowToReach) {
       onNavigateToHowToReach();
     } else {
-      window.location.hash = '#how-to-reach';
+      window.history.pushState(null, '', '/how-to-reach');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -218,7 +222,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onNavigateToAirportMap) {
       onNavigateToAirportMap(tab);
     } else {
-      window.location.hash = '#airport-map';
+      window.history.pushState(null, '', '/airport-map');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -228,7 +233,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onNavigateToFacilities) {
       onNavigateToFacilities();
     } else {
-      window.location.hash = '#facilities-services';
+      window.history.pushState(null, '', '/facilities-services');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -238,7 +244,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onNavigateToShopDine) {
       onNavigateToShopDine();
     } else {
-      window.location.hash = '#shop-dine-relax';
+      window.history.pushState(null, '', '/shop-dine-relax');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -248,7 +255,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onNavigateToTouristAttractions) {
       onNavigateToTouristAttractions();
     } else {
-      window.location.hash = '#tourist-attractions';
+      window.history.pushState(null, '', '/tourist-attractions');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -258,7 +266,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (onNavigateToContact) {
         onNavigateToContact();
       } else {
-        window.location.hash = '#contact';
+        window.history.pushState(null, '', '/contact');
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       return;
@@ -279,7 +287,8 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (onNavigateToCorporate) {
         onNavigateToCorporate();
       } else {
-        window.location.hash = '#corporate';
+        window.history.pushState(null, '', '/corporate');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
       return;
     }
@@ -300,7 +309,7 @@ export const Navbar: React.FC<NavbarProps> = ({
     if (onNavigateHome) {
       onNavigateHome();
     } else {
-      window.location.hash = '';
+      window.history.pushState(null, '', '/');
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
@@ -315,7 +324,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           
           {/* Logo on Far Left Corner */}
           <a 
-            href="#" 
+            href="/" 
             onClick={handleLogoClick}
             className="flex items-center group focus:outline-none shrink-0 z-20 cursor-pointer"
           >
@@ -900,8 +909,12 @@ export const Navbar: React.FC<NavbarProps> = ({
                   className="h-11 sm:h-12 max-h-12 w-auto object-contain cursor-pointer"
                   onClick={() => {
                     setIsMobileMenuOpen(false);
-                    if (onNavigateHome) onNavigateHome();
-                    else window.location.hash = '';
+                    if (onNavigateHome) {
+                      onNavigateHome();
+                    } else {
+                      window.history.pushState(null, '', '/');
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                   }}
                 />
                 <button

@@ -72,11 +72,11 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
     setActiveTab(initialTab);
   }, [initialTab]);
 
-  // Handle switching tabs and update hash seamlessly
+  // Handle switching tabs and update URL path seamlessly
   const handleTabChange = (tab: FlightPageTab) => {
     setActiveTab(tab);
     setExpandedFlightId(null);
-    window.location.hash = `#flights-${tab}`;
+    window.history.pushState(null, '', `/flights-${tab}`);
   };
 
   // Reset all filters

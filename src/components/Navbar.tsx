@@ -7,9 +7,14 @@ import {
   Phone, 
   Mail, 
   Building, 
+  Building2,
   ClipboardCheck, 
   Navigation, 
-  Map 
+  Map,
+  PlaneLanding,
+  PlaneTakeoff,
+  Calendar,
+  Sparkles
 } from 'lucide-react';
 
 export interface NavMenu {
@@ -19,8 +24,8 @@ export interface NavMenu {
 }
 
 export const NAV_MENUS: NavMenu[] = [
-  { id: 'flights', label: 'FLIGHTS' },
   { id: 'before-you-fly', label: 'BEFORE YOU FLY' },
+  { id: 'flights', label: 'FLIGHTS' },
   { id: 'passengers', label: 'PASSENGERS', target: '#essentials-section' },
   { id: 'corporate', label: 'CORPORATE', target: '#news-section' },
   { id: 'business', label: 'BUSINESS', target: '#essentials-section' },
@@ -95,7 +100,11 @@ export const Navbar: React.FC<NavbarProps> = ({
         window.location.hash = `#flights-${item}`;
       }
     } else if (item === 'airline-details') {
-      if (onOpenAirlineDetails) onOpenAirlineDetails();
+      if (onOpenAirlineDetails) {
+        onOpenAirlineDetails();
+      } else {
+        window.location.hash = '#airline-details';
+      }
     }
   };
 
@@ -218,53 +227,136 @@ export const Navbar: React.FC<NavbarProps> = ({
                       <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#A2552B] transition-all duration-300 group-hover:w-full" />
                     </button>
 
-                    {/* FLIGHTS: 2-Column Dropdown Panel matching user mockup */}
+                    {/* FLIGHTS: Dropdown Panel with exact same pure white styling as BEFORE YOU FLY */}
                     {isFlightsOpen && (
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[280px] sm:w-[320px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                        <div className="bg-white/95 backdrop-blur-xl border border-stone-200/90 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-4 sm:p-5 text-left">
-                          <div className="grid grid-cols-2 gap-x-6 gap-y-3.5">
-                            {/* Column 1 */}
-                            <div className="space-y-3">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('arrival')}
-                                className="text-xs sm:text-[13px] font-semibold text-stone-700 hover:text-[#A2552B] transition-colors block text-left cursor-pointer"
-                              >
-                                Arrival
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('schedules')}
-                                className="text-xs sm:text-[13px] font-semibold text-stone-700 hover:text-[#A2552B] transition-colors block text-left cursor-pointer"
-                              >
-                                Schedules
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('airline-details')}
-                                className="text-xs sm:text-[13px] font-bold text-[#A2552B] hover:text-[#8B4420] transition-colors block text-left cursor-pointer"
-                              >
-                                Airline Details
-                              </button>
-                            </div>
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[360px] sm:w-[400px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                        <div 
+                          className="bg-white border border-stone-200 rounded-2xl shadow-2xl p-2.5 overflow-hidden text-left divide-y divide-stone-100"
+                          style={{ backgroundColor: '#ffffff' }}
+                        >
+                          {/* 1. ARRIVAL */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('arrival')}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <PlaneLanding className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Arrival</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Live</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Real-time incoming flights, STA, ETA & baggage carousels
+                                </div>
+                              </div>
+                            </button>
+                          </div>
 
-                            {/* Column 2 */}
-                            <div className="space-y-3">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('departure')}
-                                className="text-xs sm:text-[13px] font-semibold text-stone-700 hover:text-[#A2552B] transition-colors block text-left cursor-pointer"
-                              >
-                                Departure
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('upcoming')}
-                                className="text-xs sm:text-[13px] font-semibold text-stone-700 hover:text-[#A2552B] transition-colors block text-left cursor-pointer"
-                              >
-                                Upcoming
-                              </button>
-                            </div>
+                          {/* 2. DEPARTURE */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('departure')}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <PlaneTakeoff className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Departure</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Live</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Outbound departures, boarding gates, STD & flight status
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 3. SCHEDULES */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('schedules')}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <Calendar className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Schedules</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Timetable</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Weekly scheduled passenger flight timetables & operating days
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 4. UPCOMING SCHEDULES */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('upcoming')}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <Sparkles className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Upcoming</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Seasonal</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Upcoming seasonal flights, winter schedule & new routes
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 5. AIRLINE DETAILS */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('airline-details')}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <Building2 className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Airline Details</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Directory</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Operating carriers, contact numbers, counters & routes
+                                </div>
+                              </div>
+                            </button>
                           </div>
                         </div>
                       </div>
@@ -305,10 +397,13 @@ export const Navbar: React.FC<NavbarProps> = ({
                       }`} />
                     </button>
 
-                    {/* BEFORE YOU FLY: 3 Dropdown Menus Panel */}
+                    {/* BEFORE YOU FLY: 3 Dropdown Menus Panel (Solid Pure White Background) */}
                     {isBeforeYouFlyOpen && (
                       <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[360px] sm:w-[400px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                        <div className="bg-[#0B121B]/95 backdrop-blur-xl border border-white/15 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.7)] p-2.5 overflow-hidden text-left divide-y divide-white/10">
+                        <div 
+                          className="bg-white border border-stone-200 rounded-2xl shadow-2xl p-2.5 overflow-hidden text-left divide-y divide-stone-100"
+                          style={{ backgroundColor: '#ffffff' }}
+                        >
                           
                           {/* 1. PROCEDURES DROPDOWN MENU */}
                           <div className="p-2">
@@ -316,17 +411,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                               <button
                                 type="button"
                                 onClick={handleOpenProcedures}
-                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-white/5 transition-colors cursor-pointer"
+                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                               >
-                                <div className="w-8 h-8 rounded-lg bg-[#A2552B]/20 border border-[#A2552B]/40 flex items-center justify-center text-[#E8A57A] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
                                   <ClipboardCheck className="w-4 h-4" />
                                 </div>
                                 <div>
-                                  <div className="text-[13px] font-bold text-white tracking-wide group-hover/item:text-[#E8A57A] transition-colors flex items-center gap-1.5">
+                                  <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center gap-1.5">
                                     <span>Procedures</span>
-                                    <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 bg-white/10 text-[#E8A57A] rounded">Guide</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] rounded">Guide</span>
                                   </div>
-                                  <div className="text-[11px] text-white/60 font-normal leading-snug mt-0.5">
+                                  <div className="text-[11px] text-stone-500 font-normal leading-snug mt-0.5">
                                     Check-in, baggage, customs & security rules
                                   </div>
                                 </div>
@@ -337,20 +432,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                                   e.stopPropagation();
                                   setOpenSubmenu(openSubmenu === 'procedures' ? null : 'procedures');
                                 }}
-                                className="p-2 text-white/50 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                                className="p-2 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 transition-colors cursor-pointer"
                                 title="Toggle Procedures Submenu"
                               >
-                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'procedures' ? 'rotate-180 text-[#E8A57A]' : ''}`} />
+                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'procedures' ? 'rotate-180 text-[#A2552B]' : ''}`} />
                               </button>
                             </div>
 
                             {/* Submenu Items for Procedures */}
                             {openSubmenu === 'procedures' && (
-                              <div className="mt-2 ml-11 pl-2.5 border-l border-white/15 space-y-1.5 py-1">
+                              <div className="mt-2 ml-11 pl-2.5 border-l border-stone-200 space-y-1.5 py-1">
                                 <button
                                   type="button"
                                   onClick={handleOpenProcedures}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Check-in & Security Screen</span>
@@ -358,7 +453,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={handleOpenProcedures}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Baggage Rules & Allowances</span>
@@ -366,7 +461,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={handleOpenProcedures}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Customs & Special Assistance</span>
@@ -381,17 +476,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                               <button
                                 type="button"
                                 onClick={handleOpenHowToReach}
-                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-white/5 transition-colors cursor-pointer"
+                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                               >
-                                <div className="w-8 h-8 rounded-lg bg-[#A2552B]/20 border border-[#A2552B]/40 flex items-center justify-center text-[#E8A57A] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
                                   <Navigation className="w-4 h-4" />
                                 </div>
                                 <div>
-                                  <div className="text-[13px] font-bold text-white tracking-wide group-hover/item:text-[#E8A57A] transition-colors flex items-center gap-1.5">
+                                  <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center gap-1.5">
                                     <span>How to Reach</span>
-                                    <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 bg-white/10 text-[#E8A57A] rounded">Transit</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] rounded">Transit</span>
                                   </div>
-                                  <div className="text-[11px] text-white/60 font-normal leading-snug mt-0.5">
+                                  <div className="text-[11px] text-stone-500 font-normal leading-snug mt-0.5">
                                     Driving routes, prepaid taxis, buses & parking
                                   </div>
                                 </div>
@@ -402,20 +497,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                                   e.stopPropagation();
                                   setOpenSubmenu(openSubmenu === 'how-to-reach' ? null : 'how-to-reach');
                                 }}
-                                className="p-2 text-white/50 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                                className="p-2 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 transition-colors cursor-pointer"
                                 title="Toggle How to Reach Submenu"
                               >
-                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'how-to-reach' ? 'rotate-180 text-[#E8A57A]' : ''}`} />
+                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'how-to-reach' ? 'rotate-180 text-[#A2552B]' : ''}`} />
                               </button>
                             </div>
 
                             {/* Submenu Items for How to Reach */}
                             {openSubmenu === 'how-to-reach' && (
-                              <div className="mt-2 ml-11 pl-2.5 border-l border-white/15 space-y-1.5 py-1">
+                              <div className="mt-2 ml-11 pl-2.5 border-l border-stone-200 space-y-1.5 py-1">
                                 <button
                                   type="button"
                                   onClick={handleOpenHowToReach}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Prepaid Taxi & Cab Services</span>
@@ -423,7 +518,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={handleOpenHowToReach}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>KSRTC Public Bus Transit</span>
@@ -431,7 +526,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={handleOpenHowToReach}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Airport Parking & FASTag Lanes</span>
@@ -446,17 +541,17 @@ export const Navbar: React.FC<NavbarProps> = ({
                               <button
                                 type="button"
                                 onClick={() => handleOpenAirportMap('overview')}
-                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-white/5 transition-colors cursor-pointer"
+                                className="flex items-start gap-3 flex-1 text-left group/item rounded-xl p-1.5 hover:bg-[#FAF7F2] transition-colors cursor-pointer"
                               >
-                                <div className="w-8 h-8 rounded-lg bg-[#A2552B]/20 border border-[#A2552B]/40 flex items-center justify-center text-[#E8A57A] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
                                   <Map className="w-4 h-4" />
                                 </div>
                                 <div>
-                                  <div className="text-[13px] font-bold text-white tracking-wide group-hover/item:text-[#E8A57A] transition-colors flex items-center gap-1.5">
+                                  <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center gap-1.5">
                                     <span>Airport Map</span>
-                                    <span className="text-[10px] uppercase font-semibold px-1.5 py-0.2 bg-white/10 text-[#E8A57A] rounded">Terminals</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] rounded">Terminals</span>
                                   </div>
-                                  <div className="text-[11px] text-white/60 font-normal leading-snug mt-0.5">
+                                  <div className="text-[11px] text-stone-500 font-normal leading-snug mt-0.5">
                                     Terminal 1 & 2 floor plans, gates & amenities
                                   </div>
                                 </div>
@@ -467,20 +562,20 @@ export const Navbar: React.FC<NavbarProps> = ({
                                   e.stopPropagation();
                                   setOpenSubmenu(openSubmenu === 'airport-map' ? null : 'airport-map');
                                 }}
-                                className="p-2 text-white/50 hover:text-white rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+                                className="p-2 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 transition-colors cursor-pointer"
                                 title="Toggle Airport Map Submenu"
                               >
-                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'airport-map' ? 'rotate-180 text-[#E8A57A]' : ''}`} />
+                                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${openSubmenu === 'airport-map' ? 'rotate-180 text-[#A2552B]' : ''}`} />
                               </button>
                             </div>
 
                             {/* Submenu Items for Airport Map */}
                             {openSubmenu === 'airport-map' && (
-                              <div className="mt-2 ml-11 pl-2.5 border-l border-white/15 space-y-1.5 py-1">
+                              <div className="mt-2 ml-11 pl-2.5 border-l border-stone-200 space-y-1.5 py-1">
                                 <button
                                   type="button"
                                   onClick={() => handleOpenAirportMap('T1')}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Terminal 1 (Domestic) Map</span>
@@ -488,7 +583,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleOpenAirportMap('T2')}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Terminal 2 (International) Map</span>
@@ -496,7 +591,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 <button
                                   type="button"
                                   onClick={() => handleOpenAirportMap('parking')}
-                                  className="w-full text-left text-[11px] text-white/80 hover:text-[#E8A57A] hover:translate-x-1 transition-all py-0.5 flex items-center gap-1.5 cursor-pointer"
+                                  className="w-full text-left text-[11px] font-medium text-stone-600 hover:text-[#A2552B] hover:translate-x-1 transition-all py-1 flex items-center gap-1.5 cursor-pointer"
                                 >
                                   <ChevronRight className="w-3 h-3 text-[#A2552B]" />
                                   <span>Parking & Concourse Layout</span>

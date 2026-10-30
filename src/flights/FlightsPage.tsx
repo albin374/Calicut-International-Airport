@@ -97,14 +97,14 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
         };
       case 'schedules':
         return {
-          image: '/Calicut Airport Under Blue Skies.png',
+          image: '/Jetliner Approaching the Runway.png',
           titlePrefix: 'Flight',
           titleAccent: 'Schedules',
           subtitle: 'Plan your journey with scheduled flight information',
         };
       case 'upcoming':
         return {
-          image: '/Golden Jet Above Sunset Clouds.png',
+          image: '/Emirates Jet Touchdown on Runway.png',
           titlePrefix: 'Upcoming',
           titleAccent: 'Schedules',
           subtitle: 'Plan your upcoming journeys with seasonal timetable information',
@@ -211,13 +211,13 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
         {/* Banner Headline Content (Matching exact design) */}
         <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl">
-              <h1 className="text-3xl sm:text-4xl md:text-[44px] font-black tracking-tight leading-none text-white drop-shadow-sm">
-                <span className="block font-bold">{bannerConfig.titlePrefix}</span>
-                <span className="block text-[#E07A5F] font-black mt-1">{bannerConfig.titleAccent}</span>
+            <div className="max-w-3xl">
+              <h1 className="text-3xl sm:text-4xl md:text-[42px] font-black tracking-tight leading-tight text-white drop-shadow-sm">
+                <span className="font-bold text-white">{bannerConfig.titlePrefix}</span>{' '}
+                <span className="text-[#E07A5F] font-black">{bannerConfig.titleAccent}</span>
               </h1>
 
-              <p className="text-xs sm:text-sm md:text-[15px] text-white/90 font-normal mt-2 max-w-xl">
+              <p className="text-xs sm:text-sm md:text-[15px] text-white/90 font-normal mt-1.5 sm:mt-2 max-w-xl">
                 {bannerConfig.subtitle}
               </p>
             </div>

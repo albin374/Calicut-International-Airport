@@ -13,13 +13,15 @@ import { ProceduresPage } from './procedures';
 import { HowToReachPage } from './how-to-reach';
 import { AirportMapPage } from './airport-map';
 import { FlightsPage, FlightPageTab } from './flights';
+import { AirlineDetailsPage } from './airline-details';
 
 export function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights'>(() => {
+  const [currentPage, setCurrentPage] = useState<'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights' | 'airline-details'>(() => {
     const hash = window.location.hash;
     if (hash === '#procedures') return 'procedures';
     if (hash === '#how-to-reach') return 'how-to-reach';
     if (hash === '#airport-map') return 'airport-map';
+    if (hash === '#airline-details' || hash === '#airlines') return 'airline-details';
     if (
       hash.startsWith('#flights') ||
       hash === '#arrival' ||
@@ -59,6 +61,9 @@ export function App() {
       } else if (hash === '#airport-map') {
         setCurrentPage('airport-map');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#airline-details' || hash === '#airlines') {
+        setCurrentPage('airline-details');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#flights-departure' || hash === '#departure') {
         setFlightTab('departure');
         setCurrentPage('flights');
@@ -85,7 +90,7 @@ export function App() {
   }, []);
 
   const navigateTo = (
-    page: 'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights',
+    page: 'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights' | 'airline-details',
     tab?: 'overview' | 'T1' | 'T2' | 'parking',
     fTab?: FlightPageTab
   ) => {
@@ -105,6 +110,8 @@ export function App() {
       window.location.hash = '#airport-map';
     } else if (page === 'flights') {
       window.location.hash = `#flights-${fTab || flightTab}`;
+    } else if (page === 'airline-details') {
+      window.location.hash = '#airline-details';
     } else {
       window.location.hash = '';
     }
@@ -134,7 +141,16 @@ export function App() {
 
   return (
     <div className="w-full min-h-screen m-0 p-0 relative font-sans selection:bg-[#A2552B] selection:text-white bg-[#FAF7F2]">
-      {currentPage === 'flights' ? (
+      {currentPage === 'airline-details' ? (
+        /* Dedicated Airline Details Directory Page */
+        <AirlineDetailsPage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+        />
+      ) : currentPage === 'flights' ? (
         /* Dedicated Flights Operations Page (Arrival, Departure, Schedules, Upcoming) */
         <FlightsPage
           initialTab={flightTab}
@@ -142,7 +158,7 @@ export function App() {
           onNavigateToProcedures={() => navigateTo('procedures')}
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
-          onOpenAirlineDetails={() => setIsAirlineModalOpen(true)}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
         />
       ) : currentPage === 'procedures' ? (
         /* Procedures Dedicated Page */
@@ -151,7 +167,7 @@ export function App() {
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'departure')}
-          onOpenAirlineDetails={() => setIsAirlineModalOpen(true)}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
         />
       ) : currentPage === 'how-to-reach' ? (
         /* How to Reach Dedicated Page */
@@ -160,7 +176,7 @@ export function App() {
           onNavigateToProcedures={() => navigateTo('procedures')}
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'arrival')}
-          onOpenAirlineDetails={() => setIsAirlineModalOpen(true)}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
         />
       ) : currentPage === 'airport-map' ? (
         /* Airport Map Dedicated Page */
@@ -169,7 +185,7 @@ export function App() {
           onNavigateToProcedures={() => navigateTo('procedures')}
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'arrival')}
-          onOpenAirlineDetails={() => setIsAirlineModalOpen(true)}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
           initialTab={mapTab}
         />
       ) : (
@@ -182,7 +198,7 @@ export function App() {
             onNavigateToHowToReach={() => navigateTo('how-to-reach')}
             onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
             onNavigateToFlights={navigateToFlights}
-            onOpenAirlineDetails={() => setIsAirlineModalOpen(true)}
+            onOpenAirlineDetails={() => navigateTo('airline-details')}
           />
 
           {/* 2. Heritage Section ("01 / THE SPIRIT OF KOZHIKODE: Rooted in heritage. Connected to the world.") */}

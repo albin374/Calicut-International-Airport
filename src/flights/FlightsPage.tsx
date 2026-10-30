@@ -186,9 +186,9 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
       {/* ======================================================== */}
       {/* 1. HERO BANNER (COMPACT HEIGHT, NO BADGE, NO UNDERLINE)  */}
       {/* ======================================================== */}
-      <section className="relative w-full h-[250px] sm:h-[280px] md:h-[300px] overflow-hidden bg-stone-900">
-        {/* Background Banner Image */}
-        <div className="absolute inset-0 transition-all duration-700">
+      <section className="relative z-40 w-full h-[250px] sm:h-[280px] md:h-[300px] bg-stone-900">
+        {/* Background Banner Image - overflow-hidden keeps the image scaling clipped inside the banner */}
+        <div className="absolute inset-0 overflow-hidden transition-all duration-700">
           <img
             src={bannerConfig.image}
             alt={bannerConfig.titleAccent}
@@ -209,9 +209,9 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
         />
 
         {/* Banner Headline Content (Matching exact design) */}
-        <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-20">
+        <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-10 pointer-events-none">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl pointer-events-auto">
               <h1 className="text-3xl sm:text-4xl md:text-[42px] font-black tracking-tight leading-tight text-white drop-shadow-sm">
                 <span className="font-bold text-white">{bannerConfig.titlePrefix}</span>{' '}
                 <span className="text-[#E07A5F] font-black">{bannerConfig.titleAccent}</span>
@@ -228,7 +228,7 @@ export const FlightsPage: React.FC<FlightsPageProps> = ({
       {/* ======================================================== */}
       {/* 2. MAIN: WITH PROPER SPACING BETWEEN TEXT & PAGE SECTION */}
       {/* ======================================================== */}
-      <main className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
         
         {/* 4-Tab Bar attached directly to the top edge of Search Card */}
         <div className="flex flex-wrap items-end gap-1 px-1">

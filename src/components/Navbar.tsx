@@ -200,7 +200,7 @@ export const Navbar: React.FC<NavbarProps> = ({
           </a>
 
           {/* Centered Navigation Menus on Desktop (Refined Sizing, White, Bold) */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 absolute left-1/2 -translate-x-1/2 z-20">
+          <nav className="hidden lg:flex items-center gap-6 xl:gap-8 absolute left-1/2 -translate-x-1/2 z-50">
             {NAV_MENUS.map((menu) => {
               if (menu.id === 'flights') {
                 return (

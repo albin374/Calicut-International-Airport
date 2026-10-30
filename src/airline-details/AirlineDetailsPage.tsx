@@ -87,9 +87,9 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH USER SPECIFIED IMAGE & SINGLE-LINE TITLE */}
       {/* ======================================================== */}
-      <section className="relative w-full h-[250px] sm:h-[280px] md:h-[300px] overflow-hidden bg-stone-900">
+      <section className="relative z-40 w-full h-[250px] sm:h-[280px] md:h-[300px] bg-stone-900">
         {/* Background Banner Image */}
-        <div className="absolute inset-0 transition-all duration-700">
+        <div className="absolute inset-0 overflow-hidden transition-all duration-700">
           <img
             src="/Modern Airport Apron with Global Airliners.png"
             alt="Operating Airlines at Calicut International Airport"
@@ -109,9 +109,9 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
         />
 
         {/* Banner Headline Content (Single Line) */}
-        <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-20">
+        <div className="absolute inset-x-0 bottom-6 sm:bottom-8 z-10 pointer-events-none">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
+            <div className="max-w-3xl pointer-events-auto">
               <h1 className="text-3xl sm:text-4xl md:text-[42px] font-black tracking-tight leading-tight text-white drop-shadow-sm">
                 <span className="font-bold text-white">Airline</span>{' '}
                 <span className="text-[#E07A5F] font-black">Details</span>
@@ -128,7 +128,7 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
       {/* ======================================================== */}
       {/* 2. MAIN DIRECTORY SECTION                                */}
       {/* ======================================================== */}
-      <main className="relative z-30 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
+      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
         
         {/* Search & Filter Toolbar */}
         <div className="bg-white rounded-2xl shadow-sm border border-stone-200/90 p-4 sm:p-5 mb-8">

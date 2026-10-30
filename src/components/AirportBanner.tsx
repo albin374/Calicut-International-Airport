@@ -15,7 +15,10 @@ import {
   ClipboardCheck,
   Navigation,
   Map,
-  Sparkles
+  Sparkles,
+  HeartPulse,
+  UtensilsCrossed,
+  Compass
 } from 'lucide-react';
 import { MOCK_FLIGHTS, Flight } from '../data/mockFlights';
 
@@ -87,9 +90,8 @@ export interface NavMenu {
 export const NAV_MENUS: NavMenu[] = [
   { id: 'before-you-fly', label: 'BEFORE YOU FLY' },
   { id: 'flights', label: 'FLIGHTS' },
-  { id: 'passengers', label: 'PASSENGERS', target: '#essentials-section' },
-  { id: 'corporate', label: 'CORPORATE', target: '#news-section' },
-  { id: 'business', label: 'BUSINESS', target: '#essentials-section' },
+  { id: 'passengers', label: 'PASSENGERS' },
+  { id: 'corporate', label: 'CORPORATE' },
   { id: 'contact', label: 'CONTACT' }
 ];
 
@@ -100,6 +102,11 @@ export interface AirportBannerProps {
   onNavigateToAirportMap?: (tab?: 'overview' | 'T1' | 'T2' | 'parking') => void;
   onNavigateToFlights?: (tab?: 'arrival' | 'departure' | 'schedules' | 'upcoming') => void;
   onOpenAirlineDetails?: () => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
   slides?: CarouselSlide[];
   autoPlayInterval?: number;
 }
@@ -111,6 +118,11 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
   onNavigateToAirportMap,
   onNavigateToFlights,
   onOpenAirlineDetails,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
   slides = DEFAULT_SLIDES,
   autoPlayInterval = 5500,
 }) => {
@@ -131,6 +143,58 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
   const [isMobileBeforeYouFlyOpen, setIsMobileBeforeYouFlyOpen] = useState<boolean>(false);
   const [openSubmenu, setOpenSubmenu] = useState<'procedures' | 'how-to-reach' | 'airport-map' | null>(null);
   const [mobileOpenSubmenu, setMobileOpenSubmenu] = useState<'procedures' | 'how-to-reach' | 'airport-map' | null>(null);
+
+  // Passengers Dropdown States
+  const [isPassengersOpen, setIsPassengersOpen] = useState<boolean>(false);
+  const [isMobilePassengersOpen, setIsMobilePassengersOpen] = useState<boolean>(false);
+  const passengersRef = useRef<HTMLDivElement>(null);
+
+  const beforeYouFlyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flightsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const passengersTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleBeforeYouFlyEnter = () => {
+    if (beforeYouFlyTimeoutRef.current) {
+      clearTimeout(beforeYouFlyTimeoutRef.current);
+      beforeYouFlyTimeoutRef.current = null;
+    }
+    setIsBeforeYouFlyOpen(true);
+  };
+
+  const handleBeforeYouFlyLeave = () => {
+    beforeYouFlyTimeoutRef.current = setTimeout(() => {
+      setIsBeforeYouFlyOpen(false);
+      setOpenSubmenu(null);
+    }, 150);
+  };
+
+  const handleFlightsEnter = () => {
+    if (flightsTimeoutRef.current) {
+      clearTimeout(flightsTimeoutRef.current);
+      flightsTimeoutRef.current = null;
+    }
+    setIsFlightsOpen(true);
+  };
+
+  const handleFlightsLeave = () => {
+    flightsTimeoutRef.current = setTimeout(() => {
+      setIsFlightsOpen(false);
+    }, 150);
+  };
+
+  const handlePassengersEnter = () => {
+    if (passengersTimeoutRef.current) {
+      clearTimeout(passengersTimeoutRef.current);
+      passengersTimeoutRef.current = null;
+    }
+    setIsPassengersOpen(true);
+  };
+
+  const handlePassengersLeave = () => {
+    passengersTimeoutRef.current = setTimeout(() => {
+      setIsPassengersOpen(false);
+    }, 150);
+  };
 
   // Airport Map Modal State
   const [isMapModalOpen, setIsMapModalOpen] = useState<boolean>(false);
@@ -163,7 +227,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     return () => clearInterval(timer);
   }, [isFocused, showSuggestions, showDatePicker, isMobileMenuOpen, autoPlayInterval, nextSlide]);
 
-  // Close popovers on click outside
+  // Close popovers on click outside and cleanup timeouts
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchContainerRef.current && !searchContainerRef.current.contains(event.target as Node)) {
@@ -178,9 +242,17 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
       if (flightsRef.current && !flightsRef.current.contains(event.target as Node)) {
         setIsFlightsOpen(false);
       }
+      if (passengersRef.current && !passengersRef.current.contains(event.target as Node)) {
+        setIsPassengersOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (beforeYouFlyTimeoutRef.current) clearTimeout(beforeYouFlyTimeoutRef.current);
+      if (flightsTimeoutRef.current) clearTimeout(flightsTimeoutRef.current);
+      if (passengersTimeoutRef.current) clearTimeout(passengersTimeoutRef.current);
+    };
   }, []);
 
   // Filter flight suggestions
@@ -210,6 +282,16 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     setShowSuggestions(false);
     if (onSearchFlights) {
       onSearchFlights(flight.flightNumber, activeTab, selectedDate);
+    }
+  };
+
+  const handleViewAllFlights = (tab: 'arrival' | 'departure' = 'arrival') => {
+    setShowSuggestions(false);
+    if (onNavigateToFlights) {
+      onNavigateToFlights(tab);
+    } else {
+      window.location.hash = `#flights-${tab}`;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -243,6 +325,36 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     }
   };
 
+  const handleOpenFacilities = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToFacilities) {
+      onNavigateToFacilities();
+    } else {
+      window.location.hash = '#facilities-services';
+    }
+  };
+
+  const handleOpenShopDine = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToShopDine) {
+      onNavigateToShopDine();
+    } else {
+      window.location.hash = '#shop-dine-relax';
+    }
+  };
+
+  const handleOpenTouristAttractions = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToTouristAttractions) {
+      onNavigateToTouristAttractions();
+    } else {
+      window.location.hash = '#tourist-attractions';
+    }
+  };
+
   const handleFlightsItemClick = (item: 'arrival' | 'departure' | 'schedules' | 'upcoming' | 'airline-details') => {
     setIsFlightsOpen(false);
     setIsMobileMenuOpen(false);
@@ -264,7 +376,12 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
   const handleMenuClick = (menu: NavMenu) => {
     setIsMobileMenuOpen(false);
     if (menu.id === 'contact') {
-      setIsContactModalOpen(true);
+      if (onNavigateToContact) {
+        onNavigateToContact();
+      } else {
+        window.location.hash = '#contact';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       return;
     }
     if (menu.id === 'flights') {
@@ -273,6 +390,18 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
     }
     if (menu.id === 'before-you-fly') {
       setIsBeforeYouFlyOpen((prev) => !prev);
+      return;
+    }
+    if (menu.id === 'passengers') {
+      setIsPassengersOpen((prev) => !prev);
+      return;
+    }
+    if (menu.id === 'corporate') {
+      if (onNavigateToCorporate) {
+        onNavigateToCorporate();
+      } else {
+        window.location.hash = '#corporate';
+      }
       return;
     }
     if (menu.target) {
@@ -287,7 +416,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
   const currentSlideData = slides[currentSlide] || slides[0];
 
   return (
-    <section className="relative z-40 w-full min-h-screen flex items-center select-none">
+    <section className="relative z-30 w-full min-h-screen flex items-center select-none">
       
       {/* ======================================================== */}
       {/* CAROUSEL BACKGROUND SLIDES (Full Screen Cross-Fade)      */}
@@ -339,8 +468,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                     key={menu.id}
                     ref={flightsRef}
                     className="relative group py-2"
-                    onMouseEnter={() => setIsFlightsOpen(true)}
-                    onMouseLeave={() => setIsFlightsOpen(false)}
+                    onMouseEnter={handleFlightsEnter}
+                    onMouseLeave={handleFlightsLeave}
                   >
                     <button
                       type="button"
@@ -502,11 +631,8 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                     key={menu.id}
                     ref={beforeYouFlyRef}
                     className="relative group py-2"
-                    onMouseEnter={() => setIsBeforeYouFlyOpen(true)}
-                    onMouseLeave={() => {
-                      setIsBeforeYouFlyOpen(false);
-                      setOpenSubmenu(null);
-                    }}
+                    onMouseEnter={handleBeforeYouFlyEnter}
+                    onMouseLeave={handleBeforeYouFlyLeave}
                   >
                     <button
                       type="button"
@@ -734,6 +860,119 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                 );
               }
 
+              if (menu.id === 'passengers') {
+                return (
+                  <div
+                    key={menu.id}
+                    ref={passengersRef}
+                    className="relative group py-2"
+                    onMouseEnter={handlePassengersEnter}
+                    onMouseLeave={handlePassengersLeave}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setIsPassengersOpen((prev) => !prev)}
+                      className="text-white hover:text-[#F3D7B7] text-[11px] sm:text-xs lg:text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-200 cursor-pointer select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] flex items-center gap-1.5 py-1 whitespace-nowrap"
+                      aria-expanded={isPassengersOpen}
+                      aria-haspopup="true"
+                    >
+                      <span>{menu.label}</span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isPassengersOpen ? 'rotate-180 text-[#E8A57A]' : 'text-white/70 group-hover:text-white'
+                        }`}
+                      />
+                      <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#A2552B] transition-all duration-300 group-hover:w-full" />
+                    </button>
+
+                    {/* PASSENGERS Dropdown Panel (Solid Pure White Background matching BEFORE YOU FLY & FLIGHTS) */}
+                    {isPassengersOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[360px] sm:w-[400px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                        <div 
+                          className="bg-white border border-stone-200 rounded-2xl shadow-2xl p-2.5 overflow-hidden text-left divide-y divide-stone-100"
+                          style={{ backgroundColor: '#ffffff' }}
+                        >
+                          {/* 1. Facilities & Services */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenFacilities}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <HeartPulse className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Facilities & Services</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Amenities</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Wi-Fi, medical aid, forex, ATMs, PRM assistance & lounges
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 2. Shop Dine Relax */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenShopDine}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <UtensilsCrossed className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Shop Dine Relax</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Retail</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Duty Free, Kozhikode Halwa, Malabar spices, cafés & CIP lounge
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 3. Tourist Attractions */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenTouristAttractions}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <Compass className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Tourist Attractions</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Explore</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Kozhikode Beach, S.M. Street, Beypore, waterfalls & Wayanad
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <button
                   key={menu.id}
@@ -777,14 +1016,19 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-stone-200">
                 <img 
-                  src="/Airports Authority of India Logo.png" 
+                  src="/logo_15042021.png" 
                   alt="Airports Authority of India" 
-                  className="h-10 sm:h-12 max-h-12 w-auto object-contain"
+                  className="h-11 sm:h-12 max-h-12 w-auto object-contain cursor-pointer"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    window.location.hash = '';
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                  }}
                 />
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200"
+                  className="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -815,46 +1059,91 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                         </button>
 
                         {isMobileFlightsOpen && (
-                          <div className="p-3 bg-white border-t border-stone-200/60 grid grid-cols-2 gap-3 text-xs">
-                            <div className="space-y-2.5">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('arrival')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Arrival
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('schedules')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Schedules
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('airline-details')}
-                                className="block text-left text-[#A2552B] hover:text-[#8B4420] font-bold cursor-pointer"
-                              >
-                                Airline Details
-                              </button>
-                            </div>
-                            <div className="space-y-2.5">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('departure')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Departure
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('upcoming')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Upcoming
-                              </button>
-                            </div>
+                          <div className="p-2 space-y-1 bg-white border-t border-stone-200/60 text-xs">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('arrival')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <PlaneLanding className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Arrival</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Live</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Real-time incoming flights & baggage</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('departure')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <PlaneTakeoff className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Departure</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Live</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Outbound tracking & boarding gates</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('schedules')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Calendar className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Schedules</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Timetable</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Weekly regular flight timetables</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('upcoming')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Sparkles className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Upcoming Schedules</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Seasonal</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Upcoming seasonal & charter flights</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('airline-details')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Building2 className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Airline Details</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Directory</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Operating carriers, counters & contact</div>
+                              </div>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -992,6 +1281,74 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                     );
                   }
 
+                  if (menu.id === 'passengers') {
+                    return (
+                      <div key={menu.id} className="rounded-xl overflow-hidden border border-stone-200/80 bg-stone-50/60">
+                        <button
+                          type="button"
+                          onClick={() => setIsMobilePassengersOpen(!isMobilePassengersOpen)}
+                          className="w-full flex items-center justify-between py-3 px-3 text-stone-900 font-bold uppercase tracking-wider text-sm hover:bg-[#FAF7F2] hover:text-[#A2552B] transition-colors"
+                        >
+                          <span className="flex items-center gap-2">
+                            <span>{menu.label}</span>
+                            <span className="text-[10px] font-semibold text-[#A2552B] bg-[#A2552B]/10 px-2 py-0.5 rounded-full">
+                              Services & Places
+                            </span>
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${
+                              isMobilePassengersOpen ? 'rotate-180 text-[#A2552B]' : ''
+                            }`}
+                          />
+                        </button>
+
+                        {isMobilePassengersOpen && (
+                          <div className="p-2 space-y-1 bg-white border-t border-stone-200/60 text-xs">
+                            <button
+                              type="button"
+                              onClick={handleOpenFacilities}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <HeartPulse className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Facilities & Services</div>
+                                <div className="text-[10px] text-stone-500">Wi-Fi, medical aid, forex, ATMs & lounges</div>
+                              </div>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleOpenShopDine}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <UtensilsCrossed className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Shop Dine Relax</div>
+                                <div className="text-[10px] text-stone-500">Duty Free, Kozhikode Halwa & cafés</div>
+                              </div>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleOpenTouristAttractions}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Compass className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Tourist Attractions</div>
+                                <div className="text-[10px] text-stone-500">Kozhikode Beach, SM Street & Beypore</div>
+                              </div>
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <button
                       key={menu.id}
@@ -1017,7 +1374,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
       {/* ======================================================== */}
       {/* MAIN HERO CONTENT (Left Aligned, Full-Height Centered)  */}
       {/* ======================================================== */}
-      <div className="relative z-30 w-full max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 pt-28 sm:pt-32 lg:pt-36 pb-12 sm:py-20 flex flex-col justify-center">
+      <div className="relative z-30 w-full max-w-7xl mx-auto px-5 sm:px-10 lg:px-16 pt-28 sm:pt-32 lg:pt-36 pb-20 sm:pb-28 lg:pb-36 flex flex-col justify-center">
         
         {/* Eyebrow Accent Bar & Tag (Terracotta Editorial Styling) */}
         <div className="flex items-center gap-3 mb-4 sm:mb-5">
@@ -1045,7 +1402,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
         {/* ======================================================== */}
         <div 
           ref={searchContainerRef}
-          className="w-full max-w-[500px] sm:max-w-[540px] bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/20 border border-white/90 relative"
+          className="w-full max-w-[500px] sm:max-w-[540px] bg-white/95 backdrop-blur-md rounded-2xl p-2.5 sm:p-3 shadow-2xl shadow-slate-900/20 border border-white/90 relative z-40"
         >
           {/* Top Tab Row: Arrivals, Departures, Today */}
           <div className="flex items-center justify-between sm:justify-start gap-1 sm:gap-2 mb-2.5">
@@ -1146,7 +1503,7 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
               <button
                 type="button"
                 onClick={() => setSearchQuery('')}
-                className="absolute right-20 text-slate-400 hover:text-slate-600 p-1"
+                className="absolute right-20 text-slate-400 hover:text-slate-600 p-1 cursor-pointer"
               >
                 <X className="w-3.5 h-3.5" />
               </button>
@@ -1163,14 +1520,21 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
 
           {/* Quick Auto-complete Suggestions Dropdown */}
           {showSuggestions && (
-            <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-fade-in">
-              <div className="px-3.5 py-2 bg-[#FAF7F2] border-b border-slate-200/60 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex justify-between items-center">
+            <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl shadow-2xl border border-slate-200 overflow-hidden z-50 animate-fade-in flex flex-col max-h-[380px]">
+              <div className="px-3.5 py-2.5 bg-[#FAF7F2] border-b border-slate-200/70 text-[11px] font-semibold text-slate-500 uppercase tracking-wider flex justify-between items-center shrink-0">
                 <span>Suggested {activeTab === 'arrival' ? 'Arrivals' : 'Departures'}</span>
-                <span className="text-[10px] text-slate-400">Press enter to view all</span>
+                <button
+                  type="button"
+                  onClick={() => handleViewAllFlights(activeTab === 'departure' ? 'departure' : 'arrival')}
+                  className="text-[11px] font-bold text-[#A2552B] hover:text-[#8B4420] flex items-center gap-1 cursor-pointer transition-colors"
+                >
+                  <span>View All</span>
+                  <ChevronRight className="w-3 h-3" />
+                </button>
               </div>
 
               {suggestions.length > 0 ? (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-slate-100 overflow-y-auto max-h-[220px]">
                   {suggestions.map((flight) => (
                     <div
                       key={flight.id}
@@ -1178,14 +1542,14 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                       className="px-3.5 py-2.5 hover:bg-[#FAF7F2] cursor-pointer flex items-center justify-between transition-colors text-xs"
                     >
                       <div className="flex items-center gap-3">
-                        <span className="font-bold text-slate-900 w-16">{flight.flightNumber}</span>
+                        <span className="font-bold text-slate-900 w-16 font-mono">{flight.flightNumber}</span>
                         <span className="text-slate-600 truncate max-w-[140px] sm:max-w-[180px]">{flight.airline}</span>
                       </div>
                       <div className="flex items-center gap-4 text-right">
                         <span className="text-slate-500 text-[11px] hidden sm:inline">
                           {activeTab === 'arrival' ? flight.origin : flight.destination}
                         </span>
-                        <span className="font-semibold text-[#A2552B] w-12">{flight.scheduledTime}</span>
+                        <span className="font-bold text-[#A2552B] font-mono w-12">{flight.scheduledTime}</span>
                       </div>
                     </div>
                   ))}
@@ -1195,6 +1559,21 @@ export const AirportBanner: React.FC<AirportBannerProps> = ({
                   No matching flights found for "{searchQuery}".
                 </div>
               )}
+
+              {/* View All Dedicated Action Bar Button */}
+              <div className="p-2.5 bg-[#FAF7F2]/90 border-t border-slate-200/80 flex items-center justify-between shrink-0">
+                <span className="text-[11px] text-slate-500 font-medium">
+                  {activeTab === 'arrival' ? 'All live incoming flights' : 'All live outbound departures'}
+                </span>
+                <button
+                  type="button"
+                  onClick={() => handleViewAllFlights(activeTab === 'departure' ? 'departure' : 'arrival')}
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[#A2552B] hover:bg-[#8B4420] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+                >
+                  <span>View All {activeTab === 'arrival' ? 'Arrivals' : 'Departures'}</span>
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           )}
 

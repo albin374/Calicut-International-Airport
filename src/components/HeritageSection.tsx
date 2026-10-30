@@ -11,7 +11,7 @@ export const HeritageSection: React.FC<HeritageSectionProps> = ({
   imageUrl = '/Golden Sunset Over Coastline from Airplane Wing.png',
 }) => {
   return (
-    <section className="w-full bg-[#FAF7F2] text-[#141414] overflow-hidden">
+    <section className="relative z-10 w-full bg-[#FAF7F2] text-[#141414] overflow-hidden">
       
       {/* Editorial Content Container */}
       <div className="max-w-7xl mx-auto px-6 sm:px-12 lg:px-16 pt-16 sm:pt-24 lg:pt-28 pb-14 sm:pb-20">

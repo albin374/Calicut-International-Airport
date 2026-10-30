@@ -14,7 +14,10 @@ import {
   PlaneLanding,
   PlaneTakeoff,
   Calendar,
-  Sparkles
+  Sparkles,
+  HeartPulse,
+  UtensilsCrossed,
+  Compass
 } from 'lucide-react';
 
 export interface NavMenu {
@@ -26,9 +29,8 @@ export interface NavMenu {
 export const NAV_MENUS: NavMenu[] = [
   { id: 'before-you-fly', label: 'BEFORE YOU FLY' },
   { id: 'flights', label: 'FLIGHTS' },
-  { id: 'passengers', label: 'PASSENGERS', target: '#essentials-section' },
-  { id: 'corporate', label: 'CORPORATE', target: '#news-section' },
-  { id: 'business', label: 'BUSINESS', target: '#essentials-section' },
+  { id: 'passengers', label: 'PASSENGERS' },
+  { id: 'corporate', label: 'CORPORATE' },
   { id: 'contact', label: 'CONTACT' }
 ];
 
@@ -40,9 +42,19 @@ export interface NavbarProps {
   onNavigateToFlights?: (tab?: 'arrival' | 'departure' | 'schedules' | 'upcoming') => void;
   onOpenFlightStatus?: (type?: 'arrival' | 'departure', filter?: string) => void;
   onOpenAirlineDetails?: () => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
   isProceduresPage?: boolean;
   isHowToReachPage?: boolean;
   isAirportMapPage?: boolean;
+  isFacilitiesPage?: boolean;
+  isShopDinePage?: boolean;
+  isTouristAttractionsPage?: boolean;
+  isCorporatePage?: boolean;
+  isContactPage?: boolean;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -53,9 +65,19 @@ export const Navbar: React.FC<NavbarProps> = ({
   onNavigateToFlights,
   onOpenFlightStatus,
   onOpenAirlineDetails,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
   isProceduresPage = false,
   isHowToReachPage = false,
   isAirportMapPage = false,
+  isFacilitiesPage = false,
+  isShopDinePage = false,
+  isTouristAttractionsPage = false,
+  isCorporatePage = false,
+  isContactPage = false,
 }) => {
   // Navigation State
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
@@ -64,6 +86,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   const [isMobileFlightsOpen, setIsMobileFlightsOpen] = useState<boolean>(false);
   const [isBeforeYouFlyOpen, setIsBeforeYouFlyOpen] = useState<boolean>(false);
   const [isMobileBeforeYouFlyOpen, setIsMobileBeforeYouFlyOpen] = useState<boolean>(false);
+  const [isPassengersOpen, setIsPassengersOpen] = useState<boolean>(false);
+  const [isMobilePassengersOpen, setIsMobilePassengersOpen] = useState<boolean>(false);
   const [openSubmenu, setOpenSubmenu] = useState<'procedures' | 'how-to-reach' | 'airport-map' | null>(null);
   const [mobileOpenSubmenu, setMobileOpenSubmenu] = useState<'procedures' | 'how-to-reach' | 'airport-map' | null>(null);
 
@@ -73,8 +97,56 @@ export const Navbar: React.FC<NavbarProps> = ({
 
   const beforeYouFlyRef = useRef<HTMLDivElement>(null);
   const flightsRef = useRef<HTMLDivElement>(null);
+  const passengersRef = useRef<HTMLDivElement>(null);
 
-  // Close popovers on click outside
+  const beforeYouFlyTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const flightsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const passengersTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleBeforeYouFlyEnter = () => {
+    if (beforeYouFlyTimeoutRef.current) {
+      clearTimeout(beforeYouFlyTimeoutRef.current);
+      beforeYouFlyTimeoutRef.current = null;
+    }
+    setIsBeforeYouFlyOpen(true);
+  };
+
+  const handleBeforeYouFlyLeave = () => {
+    beforeYouFlyTimeoutRef.current = setTimeout(() => {
+      setIsBeforeYouFlyOpen(false);
+      setOpenSubmenu(null);
+    }, 150);
+  };
+
+  const handleFlightsEnter = () => {
+    if (flightsTimeoutRef.current) {
+      clearTimeout(flightsTimeoutRef.current);
+      flightsTimeoutRef.current = null;
+    }
+    setIsFlightsOpen(true);
+  };
+
+  const handleFlightsLeave = () => {
+    flightsTimeoutRef.current = setTimeout(() => {
+      setIsFlightsOpen(false);
+    }, 150);
+  };
+
+  const handlePassengersEnter = () => {
+    if (passengersTimeoutRef.current) {
+      clearTimeout(passengersTimeoutRef.current);
+      passengersTimeoutRef.current = null;
+    }
+    setIsPassengersOpen(true);
+  };
+
+  const handlePassengersLeave = () => {
+    passengersTimeoutRef.current = setTimeout(() => {
+      setIsPassengersOpen(false);
+    }, 150);
+  };
+
+  // Close popovers on click outside and cleanup timeouts
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (beforeYouFlyRef.current && !beforeYouFlyRef.current.contains(event.target as Node)) {
@@ -83,9 +155,17 @@ export const Navbar: React.FC<NavbarProps> = ({
       if (flightsRef.current && !flightsRef.current.contains(event.target as Node)) {
         setIsFlightsOpen(false);
       }
+      if (passengersRef.current && !passengersRef.current.contains(event.target as Node)) {
+        setIsPassengersOpen(false);
+      }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      if (beforeYouFlyTimeoutRef.current) clearTimeout(beforeYouFlyTimeoutRef.current);
+      if (flightsTimeoutRef.current) clearTimeout(flightsTimeoutRef.current);
+      if (passengersTimeoutRef.current) clearTimeout(passengersTimeoutRef.current);
+    };
   }, []);
 
   const handleFlightsItemClick = (item: 'arrival' | 'departure' | 'schedules' | 'upcoming' | 'airline-details') => {
@@ -142,10 +222,45 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
   };
 
+  const handleOpenFacilities = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToFacilities) {
+      onNavigateToFacilities();
+    } else {
+      window.location.hash = '#facilities-services';
+    }
+  };
+
+  const handleOpenShopDine = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToShopDine) {
+      onNavigateToShopDine();
+    } else {
+      window.location.hash = '#shop-dine-relax';
+    }
+  };
+
+  const handleOpenTouristAttractions = () => {
+    setIsPassengersOpen(false);
+    setIsMobileMenuOpen(false);
+    if (onNavigateToTouristAttractions) {
+      onNavigateToTouristAttractions();
+    } else {
+      window.location.hash = '#tourist-attractions';
+    }
+  };
+
   const handleMenuClick = (menu: NavMenu) => {
     setIsMobileMenuOpen(false);
     if (menu.id === 'contact') {
-      setIsContactModalOpen(true);
+      if (onNavigateToContact) {
+        onNavigateToContact();
+      } else {
+        window.location.hash = '#contact';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
       return;
     }
     if (menu.id === 'flights') {
@@ -154,6 +269,18 @@ export const Navbar: React.FC<NavbarProps> = ({
     }
     if (menu.id === 'before-you-fly') {
       setIsBeforeYouFlyOpen((prev) => !prev);
+      return;
+    }
+    if (menu.id === 'passengers') {
+      setIsPassengersOpen((prev) => !prev);
+      return;
+    }
+    if (menu.id === 'corporate') {
+      if (onNavigateToCorporate) {
+        onNavigateToCorporate();
+      } else {
+        window.location.hash = '#corporate';
+      }
       return;
     }
     if (menu.target) {
@@ -208,8 +335,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={menu.id}
                     ref={flightsRef}
                     className="relative group py-2"
-                    onMouseEnter={() => setIsFlightsOpen(true)}
-                    onMouseLeave={() => setIsFlightsOpen(false)}
+                    onMouseEnter={handleFlightsEnter}
+                    onMouseLeave={handleFlightsLeave}
                   >
                     <button
                       type="button"
@@ -371,11 +498,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                     key={menu.id}
                     ref={beforeYouFlyRef}
                     className="relative group py-2"
-                    onMouseEnter={() => setIsBeforeYouFlyOpen(true)}
-                    onMouseLeave={() => {
-                      setIsBeforeYouFlyOpen(false);
-                      setOpenSubmenu(null);
-                    }}
+                    onMouseEnter={handleBeforeYouFlyEnter}
+                    onMouseLeave={handleBeforeYouFlyLeave}
                   >
                     <button
                       type="button"
@@ -607,15 +731,136 @@ export const Navbar: React.FC<NavbarProps> = ({
                 );
               }
 
+              if (menu.id === 'passengers') {
+                return (
+                  <div
+                    key={menu.id}
+                    ref={passengersRef}
+                    className="relative group py-2"
+                    onMouseEnter={handlePassengersEnter}
+                    onMouseLeave={handlePassengersLeave}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => setIsPassengersOpen((prev) => !prev)}
+                      className={`text-white hover:text-[#F3D7B7] text-[11px] sm:text-xs lg:text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-200 cursor-pointer select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] flex items-center gap-1.5 py-1 whitespace-nowrap ${
+                        isFacilitiesPage || isShopDinePage || isTouristAttractionsPage ? 'text-[#F3D7B7]' : ''
+                      }`}
+                      aria-expanded={isPassengersOpen}
+                      aria-haspopup="true"
+                    >
+                      <span>{menu.label}</span>
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isPassengersOpen ? 'rotate-180 text-[#E8A57A]' : 'text-white/70 group-hover:text-white'
+                        }`}
+                      />
+                      <span className={`absolute bottom-0 left-0 h-[2px] bg-[#A2552B] transition-all duration-300 ${
+                        isFacilitiesPage || isShopDinePage || isTouristAttractionsPage ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`} />
+                    </button>
+
+                    {/* PASSENGERS Dropdown Panel (Solid Pure White Background matching BEFORE YOU FLY & FLIGHTS) */}
+                    {isPassengersOpen && (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5 w-[360px] sm:w-[400px] z-50 animate-in fade-in slide-in-from-top-1 duration-150">
+                        <div 
+                          className="bg-white border border-stone-200 rounded-2xl shadow-2xl p-2.5 overflow-hidden text-left divide-y divide-stone-100"
+                          style={{ backgroundColor: '#ffffff' }}
+                        >
+                          {/* 1. Facilities & Services */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenFacilities}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <HeartPulse className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Facilities & Services</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Amenities</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Wi-Fi, medical aid, forex, ATMs, PRM assistance & lounges
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 2. Shop Dine Relax */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenShopDine}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <UtensilsCrossed className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Shop Dine Relax</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Retail</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Duty Free, Kozhikode Halwa, Malabar spices, cafés & CIP lounge
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+
+                          {/* 3. Tourist Attractions */}
+                          <div className="p-2">
+                            <button
+                              type="button"
+                              onClick={handleOpenTouristAttractions}
+                              className="flex items-start gap-3 w-full text-left group/item rounded-xl p-2 hover:bg-stone-50 transition-colors cursor-pointer"
+                            >
+                              <div className="w-8 h-8 rounded-lg bg-[#FAF7F2] border border-[#A2552B]/30 flex items-center justify-center text-[#A2552B] shrink-0 mt-0.5 group-hover/item:bg-[#A2552B] group-hover/item:text-white transition-colors">
+                                <Compass className="w-4 h-4" />
+                              </div>
+                              <div className="flex-1">
+                                <div className="text-[13px] font-bold text-stone-900 tracking-wide group-hover/item:text-[#A2552B] transition-colors flex items-center justify-between">
+                                  <div className="flex items-center gap-1.5">
+                                    <span>Tourist Attractions</span>
+                                    <span className="text-[10px] uppercase font-bold px-1.5 py-0.5 bg-stone-100 text-[#A2552B] border border-stone-200/80 rounded">Explore</span>
+                                  </div>
+                                  <ChevronRight className="w-3.5 h-3.5 text-stone-400 group-hover/item:text-[#A2552B] group-hover/item:translate-x-0.5 transition-all" />
+                                </div>
+                                <div className="text-[11px] text-stone-600 font-medium leading-snug mt-0.5">
+                                  Kozhikode Beach, S.M. Street, Beypore, waterfalls & Wayanad
+                                </div>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <button
                   key={menu.id}
                   type="button"
                   onClick={() => handleMenuClick(menu)}
-                  className="text-white hover:text-[#F3D7B7] text-[11px] sm:text-xs lg:text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-200 cursor-pointer select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] group relative py-1 whitespace-nowrap"
+                  className={`text-white hover:text-[#F3D7B7] text-[11px] sm:text-xs lg:text-[13px] font-bold uppercase tracking-[0.16em] transition-colors duration-200 cursor-pointer select-none drop-shadow-[0_1px_3px_rgba(0,0,0,0.8)] group relative py-1 whitespace-nowrap ${
+                    (menu.id === 'corporate' && isCorporatePage) || (menu.id === 'contact' && isContactPage) ? 'text-[#F3D7B7]' : ''
+                  }`}
                 >
                   <span>{menu.label}</span>
-                  <span className="absolute bottom-0 left-0 w-0 h-[2px] bg-[#A2552B] transition-all duration-300 group-hover:w-full" />
+                  <span className={`absolute bottom-0 left-0 h-[2px] bg-[#A2552B] transition-all duration-300 ${
+                    (menu.id === 'corporate' && isCorporatePage) || (menu.id === 'contact' && isContactPage) ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
                 </button>
               );
             })}
@@ -650,14 +895,19 @@ export const Navbar: React.FC<NavbarProps> = ({
               {/* Drawer Header */}
               <div className="flex items-center justify-between pb-5 border-b border-stone-200">
                 <img 
-                  src="/Airports Authority of India Logo.png" 
+                  src="/logo_15042021.png" 
                   alt="Airports Authority of India" 
-                  className="h-10 sm:h-12 max-h-12 w-auto object-contain"
+                  className="h-11 sm:h-12 max-h-12 w-auto object-contain cursor-pointer"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    if (onNavigateHome) onNavigateHome();
+                    else window.location.hash = '';
+                  }}
                 />
                 <button
                   type="button"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200"
+                  className="w-9 h-9 rounded-full bg-stone-100 flex items-center justify-center text-stone-600 hover:bg-stone-200 cursor-pointer"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -688,46 +938,91 @@ export const Navbar: React.FC<NavbarProps> = ({
                         </button>
 
                         {isMobileFlightsOpen && (
-                          <div className="p-3 bg-white border-t border-stone-200/60 grid grid-cols-2 gap-3 text-xs">
-                            <div className="space-y-2.5">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('arrival')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Arrival
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('schedules')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Schedules
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('airline-details')}
-                                className="block text-left text-[#A2552B] hover:text-[#8B4420] font-bold cursor-pointer"
-                              >
-                                Airline Details
-                              </button>
-                            </div>
-                            <div className="space-y-2.5">
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('departure')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Departure
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => handleFlightsItemClick('upcoming')}
-                                className="block text-left text-stone-700 hover:text-[#A2552B] font-semibold cursor-pointer"
-                              >
-                                Upcoming
-                              </button>
-                            </div>
+                          <div className="p-2 space-y-1 bg-white border-t border-stone-200/60 text-xs">
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('arrival')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <PlaneLanding className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Arrival</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Live</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Real-time incoming flights & baggage</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('departure')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <PlaneTakeoff className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Departure</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Live</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Outbound tracking & boarding gates</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('schedules')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Calendar className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Schedules</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Timetable</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Weekly regular flight timetables</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('upcoming')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Sparkles className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Upcoming Schedules</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Seasonal</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Upcoming seasonal & charter flights</div>
+                              </div>
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => handleFlightsItemClick('airline-details')}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Building2 className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900 flex items-center gap-1.5">
+                                  <span>Airline Details</span>
+                                  <span className="text-[9px] uppercase font-bold px-1.5 py-0.2 rounded bg-stone-100 text-[#A2552B]">Directory</span>
+                                </div>
+                                <div className="text-[10px] text-stone-500">Operating carriers, counters & contact</div>
+                              </div>
+                            </button>
                           </div>
                         )}
                       </div>
@@ -859,6 +1154,74 @@ export const Navbar: React.FC<NavbarProps> = ({
                                 </div>
                               )}
                             </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
+                  if (menu.id === 'passengers') {
+                    return (
+                      <div key={menu.id} className="rounded-xl overflow-hidden border border-stone-200/80 bg-stone-50/60">
+                        <button
+                          type="button"
+                          onClick={() => setIsMobilePassengersOpen(!isMobilePassengersOpen)}
+                          className="w-full flex items-center justify-between py-3 px-3 text-stone-900 font-bold uppercase tracking-wider text-sm hover:bg-[#FAF7F2] hover:text-[#A2552B] transition-colors"
+                        >
+                          <span className="flex items-center gap-2">
+                            <span>{menu.label}</span>
+                            <span className="text-[10px] font-semibold text-[#A2552B] bg-[#A2552B]/10 px-2 py-0.5 rounded-full">
+                              Services & Places
+                            </span>
+                          </span>
+                          <ChevronDown
+                            className={`w-4 h-4 text-stone-400 transition-transform duration-200 ${
+                              isMobilePassengersOpen ? 'rotate-180 text-[#A2552B]' : ''
+                            }`}
+                          />
+                        </button>
+
+                        {isMobilePassengersOpen && (
+                          <div className="p-2 space-y-1 bg-white border-t border-stone-200/60 text-xs">
+                            <button
+                              type="button"
+                              onClick={handleOpenFacilities}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <HeartPulse className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Facilities & Services</div>
+                                <div className="text-[10px] text-stone-500">Wi-Fi, medical aid, forex, ATMs & lounges</div>
+                              </div>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleOpenShopDine}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <UtensilsCrossed className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Shop Dine Relax</div>
+                                <div className="text-[10px] text-stone-500">Duty Free, Kozhikode Halwa & cafés</div>
+                              </div>
+                            </button>
+                            <button
+                              type="button"
+                              onClick={handleOpenTouristAttractions}
+                              className="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-stone-50 text-stone-800 text-left font-medium cursor-pointer"
+                            >
+                              <div className="w-7 h-7 rounded-md bg-[#A2552B]/10 flex items-center justify-center text-[#A2552B] shrink-0">
+                                <Compass className="w-3.5 h-3.5" />
+                              </div>
+                              <div>
+                                <div className="font-bold text-stone-900">Tourist Attractions</div>
+                                <div className="text-[10px] text-stone-500">Kozhikode Beach, SM Street & Beypore</div>
+                              </div>
+                            </button>
                           </div>
                         )}
                       </div>

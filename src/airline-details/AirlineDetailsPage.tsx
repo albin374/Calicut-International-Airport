@@ -24,6 +24,11 @@ interface AirlineDetailsPageProps {
   onNavigateToHowToReach?: () => void;
   onNavigateToAirportMap?: (tab?: 'overview' | 'T1' | 'T2' | 'parking') => void;
   onNavigateToFlights?: (tab?: 'arrival' | 'departure' | 'schedules' | 'upcoming') => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
 }
 
 export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
@@ -32,6 +37,11 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
   onNavigateToHowToReach,
   onNavigateToAirportMap,
   onNavigateToFlights,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState<'All' | 'Domestic' | 'International' | 'Terminal 1' | 'Terminal 2'>('All');
@@ -83,11 +93,11 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] text-stone-900 font-sans selection:bg-[#A2552B] selection:text-white">
+    <div className="min-h-screen w-full max-w-full overflow-x-hidden bg-[#FAF7F2] text-stone-900 font-sans selection:bg-[#A2552B] selection:text-white">
       {/* ======================================================== */}
       {/* 1. HERO BANNER WITH USER SPECIFIED IMAGE & SINGLE-LINE TITLE */}
       {/* ======================================================== */}
-      <section className="relative z-40 w-full h-[250px] sm:h-[280px] md:h-[300px] bg-stone-900">
+      <section className="relative z-40 w-full max-w-full h-[250px] sm:h-[280px] md:h-[300px] bg-stone-900">
         {/* Background Banner Image */}
         <div className="absolute inset-0 overflow-hidden transition-all duration-700">
           <img
@@ -106,6 +116,11 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
           onNavigateToHowToReach={onNavigateToHowToReach}
           onNavigateToAirportMap={onNavigateToAirportMap}
           onNavigateToFlights={onNavigateToFlights}
+          onNavigateToFacilities={onNavigateToFacilities}
+          onNavigateToShopDine={onNavigateToShopDine}
+          onNavigateToTouristAttractions={onNavigateToTouristAttractions}
+          onNavigateToCorporate={onNavigateToCorporate}
+          onNavigateToContact={onNavigateToContact}
         />
 
         {/* Banner Headline Content (Single Line) */}
@@ -128,14 +143,14 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
       {/* ======================================================== */}
       {/* 2. MAIN DIRECTORY SECTION                                */}
       {/* ======================================================== */}
-      <main className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20">
+      <main className="relative z-10 w-full max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 pt-6 sm:pt-8 pb-20 overflow-x-hidden md:overflow-x-visible">
         
         {/* Search & Filter Toolbar */}
-        <div className="bg-white rounded-2xl shadow-sm border border-stone-200/90 p-4 sm:p-5 mb-8">
+        <div className="bg-white rounded-2xl shadow-sm border border-stone-200/90 p-3.5 sm:p-5 mb-6 sm:mb-8 w-full max-w-full overflow-hidden">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             
             {/* Search Box */}
-            <div className="relative flex-1 max-w-md">
+            <div className="relative flex-1 max-w-md w-full">
               <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
@@ -148,19 +163,19 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
                 <button
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-stone-400 hover:text-stone-600 font-bold"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-stone-400 hover:text-stone-600 font-bold cursor-pointer"
                 >
                   ✕
                 </button>
               )}
             </div>
 
-            {/* Filter Pills */}
-            <div className="flex flex-wrap items-center gap-1.5">
+            {/* Filter Pills (Scrollable on narrow mobile screens) */}
+            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar sm:flex-wrap max-w-full pb-1 sm:pb-0">
               <button
                 type="button"
                 onClick={() => setActiveFilter('All')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeFilter === 'All'
                     ? 'bg-[#A2552B] text-white shadow-xs'
                     : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-stone-100'
@@ -172,7 +187,7 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveFilter('Domestic')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeFilter === 'Domestic'
                     ? 'bg-[#A2552B] text-white shadow-xs'
                     : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-stone-100'
@@ -184,7 +199,7 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveFilter('International')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeFilter === 'International'
                     ? 'bg-[#A2552B] text-white shadow-xs'
                     : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-stone-100'
@@ -196,7 +211,7 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveFilter('Terminal 1')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeFilter === 'Terminal 1'
                     ? 'bg-[#A2552B] text-white shadow-xs'
                     : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-stone-100'
@@ -208,7 +223,7 @@ export const AirlineDetailsPage: React.FC<AirlineDetailsPageProps> = ({
               <button
                 type="button"
                 onClick={() => setActiveFilter('Terminal 2')}
-                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer shrink-0 whitespace-nowrap ${
                   activeFilter === 'Terminal 2'
                     ? 'bg-[#A2552B] text-white shadow-xs'
                     : 'bg-stone-50 border border-stone-200 text-stone-700 hover:bg-stone-100'

@@ -22,6 +22,11 @@ export interface HowToReachPageProps {
   onNavigateToAirportMap?: (tab?: 'overview' | 'T1' | 'T2' | 'parking') => void;
   onOpenFlightStatus?: (type?: 'arrival' | 'departure') => void;
   onOpenAirlineDetails?: () => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
 }
 
 export const HowToReachPage: React.FC<HowToReachPageProps> = ({
@@ -30,6 +35,11 @@ export const HowToReachPage: React.FC<HowToReachPageProps> = ({
   onNavigateToAirportMap,
   onOpenFlightStatus,
   onOpenAirlineDetails,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
 }) => {
   const [activeTab, setActiveTab] = useState<'bus' | 'train' | 'car'>('bus');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -39,14 +49,31 @@ export const HowToReachPage: React.FC<HowToReachPageProps> = ({
   return (
     <div className="w-full min-h-screen m-0 p-0 font-sans selection:bg-[#A2552B] selection:text-white bg-white text-stone-800 flex flex-col justify-between">
       
+      {/* Top Navbar with highest z-index so dropdowns stay on top */}
+      <div className="relative z-50">
+        <Navbar 
+          onNavigateHome={onNavigateHome}
+          onNavigateToProcedures={onNavigateToProcedures}
+          onNavigateToHowToReach={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onNavigateToAirportMap={onNavigateToAirportMap}
+          onOpenFlightStatus={onOpenFlightStatus}
+          onOpenAirlineDetails={onOpenAirlineDetails}
+          onNavigateToFacilities={onNavigateToFacilities}
+          onNavigateToShopDine={onNavigateToShopDine}
+          onNavigateToTouristAttractions={onNavigateToTouristAttractions}
+          onNavigateToCorporate={onNavigateToCorporate}
+          onNavigateToContact={onNavigateToContact}
+          isHowToReachPage={true}
+        />
+      </div>
+
       {/* ======================================================== */}
       {/* 1. TOP HERO BANNER: Under Blue Skies Terminal Image      */}
-      {/* Navbar sits transparently over banner (NO solid bg)      */}
       {/* ======================================================== */}
-      <section className="relative w-full min-h-[380px] sm:min-h-[440px] lg:min-h-[470px] flex flex-col justify-between overflow-hidden bg-slate-900 select-none">
+      <section className="relative z-10 w-full min-h-[360px] sm:min-h-[400px] lg:min-h-[440px] flex flex-col justify-between bg-slate-900 select-none pb-14 sm:pb-16">
         
         {/* Background Banner Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src="/Modern Airport Terminal Under Blue Skies.png"
             alt="Calicut International Airport Terminal Under Blue Skies"
@@ -57,19 +84,8 @@ export const HowToReachPage: React.FC<HowToReachPageProps> = ({
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 via-[45%] to-transparent pointer-events-none" />
         </div>
 
-        {/* TOP NAVIGATION BAR: Directly on top of banner (no background) */}
-        <Navbar 
-          onNavigateHome={onNavigateHome}
-          onNavigateToProcedures={onNavigateToProcedures}
-          onNavigateToHowToReach={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          onNavigateToAirportMap={onNavigateToAirportMap}
-          onOpenFlightStatus={onOpenFlightStatus}
-          onOpenAirlineDetails={onOpenAirlineDetails}
-          isHowToReachPage={true}
-        />
-
         {/* HERO TITLE & BREADCRUMB */}
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20">
+        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14">
           
           {/* Breadcrumb: Home > Plan Your Journey > How to Reach */}
           <div className="flex items-center gap-2 text-xs sm:text-[13px] font-medium text-white/80 mb-3 sm:mb-4">
@@ -96,9 +112,6 @@ export const HowToReachPage: React.FC<HowToReachPageProps> = ({
             Explore the best and most convenient ways to reach Calicut International Airport.
           </p>
 
-          {/* Terracotta Brand Accent Bar */}
-          <div className="w-12 h-1 bg-[#A2552B] rounded-full mt-4 shadow-sm" />
-
         </div>
 
       </section>
@@ -106,8 +119,9 @@ export const HowToReachPage: React.FC<HowToReachPageProps> = ({
       {/* ======================================================== */}
       {/* 2. SECTION AFTER BANNER: CURVED WHITE CONTAINER          */}
       {/* Curved top edge overlapping banner (-mt-10 sm:-mt-14)    */}
+      {/* Set to z-20 so white container sits cleanly OVER banner  */}
       {/* ======================================================== */}
-      <section className="relative z-30 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-white border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-8 sm:pt-12 pb-16 flex-1">
+      <section className="relative z-20 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-white border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-10 sm:pt-14 pb-16 flex-1">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row items-start gap-8 lg:gap-10">
             

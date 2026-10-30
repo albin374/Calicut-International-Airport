@@ -30,6 +30,11 @@ export interface ProceduresPageProps {
   onNavigateToAirportMap?: (tab?: 'overview' | 'T1' | 'T2' | 'parking') => void;
   onOpenFlightStatus?: (type?: 'arrival' | 'departure') => void;
   onOpenAirlineDetails?: () => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
 }
 
 export const ProceduresPage: React.FC<ProceduresPageProps> = ({
@@ -38,6 +43,11 @@ export const ProceduresPage: React.FC<ProceduresPageProps> = ({
   onNavigateToAirportMap,
   onOpenFlightStatus,
   onOpenAirlineDetails,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
 }) => {
   const [selectedItem, setSelectedItem] = useState<ProcedureItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -83,13 +93,31 @@ export const ProceduresPage: React.FC<ProceduresPageProps> = ({
   return (
     <div className="w-full min-h-screen m-0 p-0 font-sans selection:bg-[#A2552B] selection:text-white bg-[#FAF7F2] text-stone-800">
       
+      {/* Top Navbar with highest z-index so dropdowns stay on top */}
+      <div className="relative z-50">
+        <Navbar 
+          onNavigateHome={onNavigateHome}
+          onNavigateToProcedures={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onNavigateToHowToReach={onNavigateToHowToReach}
+          onNavigateToAirportMap={onNavigateToAirportMap}
+          onOpenFlightStatus={onOpenFlightStatus}
+          onOpenAirlineDetails={onOpenAirlineDetails}
+          onNavigateToFacilities={onNavigateToFacilities}
+          onNavigateToShopDine={onNavigateToShopDine}
+          onNavigateToTouristAttractions={onNavigateToTouristAttractions}
+          onNavigateToCorporate={onNavigateToCorporate}
+          onNavigateToContact={onNavigateToContact}
+          isProceduresPage={true}
+        />
+      </div>
+
       {/* ======================================================== */}
       {/* HERO BANNER SECTION WITH CINEMATIC SUNSET TERMINAL IMAGE */}
       {/* ======================================================== */}
-      <section className="relative w-full min-h-[380px] sm:min-h-[440px] lg:min-h-[480px] flex flex-col justify-between overflow-hidden bg-slate-900 select-none">
+      <section className="relative z-10 w-full min-h-[360px] sm:min-h-[400px] lg:min-h-[440px] flex flex-col justify-between bg-slate-900 select-none pb-14 sm:pb-16">
         
         {/* Background Banner Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src="/Sunset Departures at the Airport.png"
             alt="Calicut International Airport Sunset Departures View"
@@ -100,21 +128,10 @@ export const ProceduresPage: React.FC<ProceduresPageProps> = ({
           <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent pointer-events-none" />
         </div>
 
-        {/* TOP NAVIGATION BAR (Exact same navbar as home page) */}
-        <Navbar 
-          onNavigateHome={onNavigateHome}
-          onNavigateToProcedures={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          onNavigateToHowToReach={onNavigateToHowToReach}
-          onNavigateToAirportMap={onNavigateToAirportMap}
-          onOpenFlightStatus={onOpenFlightStatus}
-          onOpenAirlineDetails={onOpenAirlineDetails}
-          isProceduresPage={true}
-        />
-
         {/* HERO TITLE & BREADCRUMB */}
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16">
+        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14">
           
-          {/* Breadcrumb: Home > Before You Fly */}
+          {/* Breadcrumb: Home > Before You Fly > Procedures */}
           <div className="flex items-center gap-2 text-xs sm:text-[13px] font-medium text-white/80 mb-3 sm:mb-4">
             <button 
               type="button"
@@ -145,8 +162,9 @@ export const ProceduresPage: React.FC<ProceduresPageProps> = ({
 
       {/* ======================================================== */}
       {/* MAIN CONTENT SECTION: CURVED CARD CONTAINER             */}
+      {/* Set to z-20 so curved container sits cleanly OVER banner */}
       {/* ======================================================== */}
-      <main className="relative z-30 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-[#FAF7F2] border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-8 sm:pt-12 pb-16">
+      <main className="relative z-20 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-[#FAF7F2] border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-10 sm:pt-14 pb-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-8 lg:px-12">
           
           {/* ====================================================== */}

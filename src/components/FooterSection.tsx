@@ -273,7 +273,7 @@ export const FooterSection: React.FC = () => {
           </div>
 
           {/* Quick Legal Links & Back to Top */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center justify-center sm:justify-end gap-3 sm:gap-6">
             <span className="hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
             <span className="hover:text-white cursor-pointer transition-colors">Terms of Use</span>
             <span className="hover:text-white cursor-pointer transition-colors">Sitemap</span>
@@ -282,7 +282,7 @@ export const FooterSection: React.FC = () => {
             <button
               onClick={scrollToTop}
               aria-label="Scroll back to top"
-              className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#A2552B] text-white flex items-center justify-center transition-all duration-300 ml-2 cursor-pointer shadow-xs"
+              className="w-9 h-9 rounded-full bg-white/10 hover:bg-[#A2552B] text-white flex items-center justify-center transition-all duration-300 ml-1 sm:ml-2 cursor-pointer shadow-xs shrink-0"
             >
               <ArrowUp className="w-4 h-4" />
             </button>

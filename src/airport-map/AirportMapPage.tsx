@@ -30,6 +30,11 @@ export interface AirportMapPageProps {
   onNavigateToHowToReach: () => void;
   onOpenFlightStatus?: (type?: 'arrival' | 'departure') => void;
   onOpenAirlineDetails?: () => void;
+  onNavigateToFacilities?: () => void;
+  onNavigateToShopDine?: () => void;
+  onNavigateToTouristAttractions?: () => void;
+  onNavigateToCorporate?: () => void;
+  onNavigateToContact?: () => void;
   initialTab?: 'overview' | 'T1' | 'T2' | 'parking';
 }
 
@@ -39,6 +44,11 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
   onNavigateToHowToReach,
   onOpenFlightStatus,
   onOpenAirlineDetails,
+  onNavigateToFacilities,
+  onNavigateToShopDine,
+  onNavigateToTouristAttractions,
+  onNavigateToCorporate,
+  onNavigateToContact,
   initialTab = 'overview',
 }) => {
   const [activeTab, setActiveTab] = useState<'overview' | 'T1' | 'T2' | 'parking'>(initialTab);
@@ -85,14 +95,31 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
   return (
     <div className="w-full min-h-screen m-0 p-0 font-sans selection:bg-[#A2552B] selection:text-white bg-[#FAF7F2] text-stone-800 flex flex-col justify-between">
       
+      {/* Top Navbar with highest z-index so dropdowns stay on top */}
+      <div className="relative z-50">
+        <Navbar 
+          onNavigateHome={onNavigateHome}
+          onNavigateToProcedures={onNavigateToProcedures}
+          onNavigateToHowToReach={onNavigateToHowToReach}
+          onNavigateToAirportMap={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          onOpenFlightStatus={onOpenFlightStatus}
+          onOpenAirlineDetails={onOpenAirlineDetails}
+          onNavigateToFacilities={onNavigateToFacilities}
+          onNavigateToShopDine={onNavigateToShopDine}
+          onNavigateToTouristAttractions={onNavigateToTouristAttractions}
+          onNavigateToCorporate={onNavigateToCorporate}
+          onNavigateToContact={onNavigateToContact}
+          isAirportMapPage={true}
+        />
+      </div>
+
       {/* ======================================================== */}
       {/* 1. TOP HERO BANNER: Aerial Terminal Campus Image         */}
-      {/* Navbar sits transparently over banner (NO solid bg)      */}
       {/* ======================================================== */}
-      <section className="relative w-full min-h-[380px] sm:min-h-[440px] lg:min-h-[470px] flex flex-col justify-between overflow-hidden bg-slate-900 select-none">
+      <section className="relative z-10 w-full min-h-[360px] sm:min-h-[400px] lg:min-h-[440px] flex flex-col justify-between bg-slate-900 select-none pb-14 sm:pb-16">
         
         {/* Background Banner Image */}
-        <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 z-0 overflow-hidden">
           <img
             src="/Calicut International Airport Terminal.png"
             alt="Calicut International Airport Aerial Terminal Campus"
@@ -103,19 +130,8 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/45 via-[45%] to-transparent pointer-events-none" />
         </div>
 
-        {/* TOP NAVIGATION BAR: Directly on top of banner (no background) */}
-        <Navbar 
-          onNavigateHome={onNavigateHome}
-          onNavigateToProcedures={onNavigateToProcedures}
-          onNavigateToHowToReach={onNavigateToHowToReach}
-          onNavigateToAirportMap={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          onOpenFlightStatus={onOpenFlightStatus}
-          onOpenAirlineDetails={onOpenAirlineDetails}
-          isAirportMapPage={true}
-        />
-
         {/* HERO TITLE & BREADCRUMB */}
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20">
+        <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-8 lg:px-12 pt-28 sm:pt-32 lg:pt-36 pb-12 sm:pb-14">
           
           {/* Breadcrumb: Home > Plan Your Journey > Airport Map */}
           <div className="flex items-center gap-2 text-xs sm:text-[13px] font-medium text-white/80 mb-3 sm:mb-4">
@@ -132,7 +148,7 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
             <span className="text-[#E8A57A] font-semibold">Airport Map</span>
           </div>
 
-          {/* Headline: Airport Map & Terminal Guide */}
+          {/* Headline: Airport Map */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-sans font-bold tracking-tight text-white mb-3 sm:mb-4 drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)]">
             Airport <span className="text-[#E8A57A]">Map</span>
           </h1>
@@ -142,9 +158,6 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
             Interactive terminal layouts, departure gates, check-in desks, lounges, and ground transit at Calicut International Airport (CCJ / VOCL).
           </p>
 
-          {/* Terracotta Brand Accent Bar */}
-          <div className="w-12 h-1 bg-[#A2552B] rounded-full mt-4 shadow-sm" />
-
         </div>
 
       </section>
@@ -152,8 +165,9 @@ export const AirportMapPage: React.FC<AirportMapPageProps> = ({
       {/* ======================================================== */}
       {/* 2. SECTION AFTER BANNER: CURVED WHITE CONTAINER          */}
       {/* Curved top edge overlapping banner (-mt-10 sm:-mt-14)    */}
+      {/* Set to z-20 so white container sits cleanly OVER banner  */}
       {/* ======================================================== */}
-      <section className="relative z-30 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-white border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-8 sm:pt-12 pb-16 flex-1">
+      <section className="relative z-20 -mt-10 sm:-mt-14 rounded-t-[36px] sm:rounded-t-[44px] bg-white border-t border-white/60 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] pt-8 sm:pt-10 pb-16 flex-1">
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
           
           {/* ==================================================== */}

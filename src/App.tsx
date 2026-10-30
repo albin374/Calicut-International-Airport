@@ -14,14 +14,35 @@ import { HowToReachPage } from './how-to-reach';
 import { AirportMapPage } from './airport-map';
 import { FlightsPage, FlightPageTab } from './flights';
 import { AirlineDetailsPage } from './airline-details';
+import { FacilitiesServicesPage, ShopDineRelaxPage, TouristAttractionsPage } from './passengers';
+import { CorporatePage } from './corporate';
+import { ContactPage } from './contact';
+
+export type AppPage = 
+  | 'home' 
+  | 'procedures' 
+  | 'how-to-reach' 
+  | 'airport-map' 
+  | 'flights' 
+  | 'airline-details'
+  | 'facilities-services'
+  | 'shop-dine-relax'
+  | 'tourist-attractions'
+  | 'corporate'
+  | 'contact';
 
 export function App() {
-  const [currentPage, setCurrentPage] = useState<'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights' | 'airline-details'>(() => {
+  const [currentPage, setCurrentPage] = useState<AppPage>(() => {
     const hash = window.location.hash;
     if (hash === '#procedures') return 'procedures';
     if (hash === '#how-to-reach') return 'how-to-reach';
     if (hash === '#airport-map') return 'airport-map';
     if (hash === '#airline-details' || hash === '#airlines') return 'airline-details';
+    if (hash === '#facilities-services' || hash === '#facilities' || hash === '#services') return 'facilities-services';
+    if (hash === '#shop-dine-relax' || hash === '#shop-dine' || hash === '#dining') return 'shop-dine-relax';
+    if (hash === '#tourist-attractions' || hash === '#attractions') return 'tourist-attractions';
+    if (hash === '#corporate') return 'corporate';
+    if (hash === '#contact') return 'contact';
     if (
       hash.startsWith('#flights') ||
       hash === '#arrival' ||
@@ -64,6 +85,21 @@ export function App() {
       } else if (hash === '#airline-details' || hash === '#airlines') {
         setCurrentPage('airline-details');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#facilities-services' || hash === '#facilities' || hash === '#services') {
+        setCurrentPage('facilities-services');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#shop-dine-relax' || hash === '#shop-dine' || hash === '#dining') {
+        setCurrentPage('shop-dine-relax');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#tourist-attractions' || hash === '#attractions') {
+        setCurrentPage('tourist-attractions');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#corporate') {
+        setCurrentPage('corporate');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (hash === '#contact') {
+        setCurrentPage('contact');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       } else if (hash === '#flights-departure' || hash === '#departure') {
         setFlightTab('departure');
         setCurrentPage('flights');
@@ -90,7 +126,7 @@ export function App() {
   }, []);
 
   const navigateTo = (
-    page: 'home' | 'procedures' | 'how-to-reach' | 'airport-map' | 'flights' | 'airline-details',
+    page: AppPage,
     tab?: 'overview' | 'T1' | 'T2' | 'parking',
     fTab?: FlightPageTab
   ) => {
@@ -112,6 +148,16 @@ export function App() {
       window.location.hash = `#flights-${fTab || flightTab}`;
     } else if (page === 'airline-details') {
       window.location.hash = '#airline-details';
+    } else if (page === 'facilities-services') {
+      window.location.hash = '#facilities-services';
+    } else if (page === 'shop-dine-relax') {
+      window.location.hash = '#shop-dine-relax';
+    } else if (page === 'tourist-attractions') {
+      window.location.hash = '#tourist-attractions';
+    } else if (page === 'corporate') {
+      window.location.hash = '#corporate';
+    } else if (page === 'contact') {
+      window.location.hash = '#contact';
     } else {
       window.location.hash = '';
     }
@@ -140,7 +186,7 @@ export function App() {
   };
 
   return (
-    <div className="w-full min-h-screen m-0 p-0 relative font-sans selection:bg-[#A2552B] selection:text-white bg-[#FAF7F2]">
+    <div className="w-full max-w-full min-h-screen m-0 p-0 relative font-sans selection:bg-[#A2552B] selection:text-white bg-[#FAF7F2] overflow-x-hidden">
       {currentPage === 'airline-details' ? (
         /* Dedicated Airline Details Directory Page */
         <AirlineDetailsPage
@@ -149,6 +195,11 @@ export function App() {
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onNavigateToFlights={navigateToFlights}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
         />
       ) : currentPage === 'flights' ? (
         /* Dedicated Flights Operations Page (Arrival, Departure, Schedules, Upcoming) */
@@ -159,6 +210,11 @@ export function App() {
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
         />
       ) : currentPage === 'procedures' ? (
         /* Procedures Dedicated Page */
@@ -168,6 +224,11 @@ export function App() {
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'departure')}
           onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
         />
       ) : currentPage === 'how-to-reach' ? (
         /* How to Reach Dedicated Page */
@@ -177,6 +238,56 @@ export function App() {
           onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'arrival')}
           onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
+        />
+      ) : currentPage === 'facilities-services' ? (
+        /* Facilities & Passenger Services Dedicated Page */
+        <FacilitiesServicesPage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
+        />
+      ) : currentPage === 'shop-dine-relax' ? (
+        /* Shop, Dine & Relax Dedicated Page */
+        <ShopDineRelaxPage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
+        />
+      ) : currentPage === 'tourist-attractions' ? (
+        /* Tourist Attractions Dedicated Page */
+        <TouristAttractionsPage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
         />
       ) : currentPage === 'airport-map' ? (
         /* Airport Map Dedicated Page */
@@ -186,7 +297,42 @@ export function App() {
           onNavigateToHowToReach={() => navigateTo('how-to-reach')}
           onOpenFlightStatus={(type) => navigateToFlights(type || 'arrival')}
           onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
           initialTab={mapTab}
+        />
+      ) : currentPage === 'corporate' ? (
+        /* Dedicated Corporate & Institutional Page */
+        <CorporatePage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
+        />
+      ) : currentPage === 'contact' ? (
+        /* Dedicated Contact Us & Passenger Support Page */
+        <ContactPage
+          onNavigateHome={() => navigateTo('home')}
+          onNavigateToProcedures={() => navigateTo('procedures')}
+          onNavigateToHowToReach={() => navigateTo('how-to-reach')}
+          onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
+          onNavigateToFlights={navigateToFlights}
+          onOpenAirlineDetails={() => navigateTo('airline-details')}
+          onNavigateToFacilities={() => navigateTo('facilities-services')}
+          onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+          onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+          onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
         />
       ) : (
         /* Home Landing Page */
@@ -199,6 +345,11 @@ export function App() {
             onNavigateToAirportMap={(tab) => navigateTo('airport-map', tab)}
             onNavigateToFlights={navigateToFlights}
             onOpenAirlineDetails={() => navigateTo('airline-details')}
+            onNavigateToFacilities={() => navigateTo('facilities-services')}
+            onNavigateToShopDine={() => navigateTo('shop-dine-relax')}
+            onNavigateToTouristAttractions={() => navigateTo('tourist-attractions')}
+            onNavigateToCorporate={() => navigateTo('corporate')}
+          onNavigateToContact={() => navigateTo('contact')}
           />
 
           {/* 2. Heritage Section ("01 / THE SPIRIT OF KOZHIKODE: Rooted in heritage. Connected to the world.") */}
